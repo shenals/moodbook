@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
-import Calendar from "react-calendar";
+import Dashboard from "./pages/Dashboard.js";
 
 import 'react-calendar/dist/Calendar.css';
 
@@ -11,7 +11,6 @@ import "./App.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
-import Journal from "./pages/Journal.js";
 
 /**
  * Define the "App" component as a class.
@@ -20,13 +19,6 @@ class App extends Component {
   // makes props available in this component
   constructor(props) {
     super(props);
-    const curTime = new Date();
-    this.state = {
-      userId: undefined,
-      date: curTime.getDate(),
-      month: curTime.getMonth() + 1,
-      year: curTime.getFullYear(),
-    };
   }
 
   componentDidMount() {
@@ -54,23 +46,7 @@ class App extends Component {
 
   render() {
     return (
-      <>
-      <div className="u-flex">
-        <div className="Journal-subContainer">
-          <Calendar onClickDay={(value, event) => {
-              this.setState({
-                date: value.getDate(),
-                month: value.getMonth() + 1,
-                year: value.getFullYear(),
-              })
-            }}/>
-          <div>Selected date: {this.state.year}/{this.state.month}/{this.state.date}</div>
-        </div>
-        <div className="Journal-subContainer">
-          <Journal />
-        </div>
-      </div>
-      </>
+      <Dashboard />
     );
   }
 }

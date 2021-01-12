@@ -9,13 +9,25 @@ class Journal extends Component {
     this.state = {
       text: "",
       moods: ["happy", "excited"],
+      allMoods: ["happy", "sad", "excited", "hosed"],
     };
   }
 
-  handleChange = (value, event) => {
+  handleClickCurMood = (mood) => {
     this.setState(
-      {text: value},
+      {moods: this.state.moods.filter((value) => value !== mood)},
     );
+  }
+
+  handleClickAllMoods = (mood) => {
+    this.setState(
+      {moods: [...this.state.moods, mood]},
+    );
+  }
+
+  handleDisableMood = (mood) => {
+    const hasMood = this.state.moods.filter((value) => value === mood);
+    return hasMood.length !== 0;
   }
 
   componentDidMount() {
@@ -24,7 +36,10 @@ class Journal extends Component {
 
   render() {
     const moodList = this.state.moods.map((mood) => (
-      <span>😁 {mood} </span>
+      <button onClick={() => this.handleClickCurMood(mood)}> {mood} </button>
+    ));
+    const allMoodList = this.state.allMoods.map((mood) => (
+      <button onClick={() => this.handleClickAllMoods(mood)} disabled={this.handleDisableMood(mood)}> {mood} </button>
     ));
     return (
       <>
@@ -36,6 +51,9 @@ class Journal extends Component {
         />
         <div>{this.state.text}</div>
         <div>{moodList}</div>
+        <br/>
+        <div>Moods</div>
+        <div>{allMoodList}</div>
       </>
     );
   }
