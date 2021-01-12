@@ -19,6 +19,9 @@ class App extends Component {
   // makes props available in this component
   constructor(props) {
     super(props);
+    this.state = {
+      userId: undefined,
+    };
   }
 
   componentDidMount() {
@@ -46,7 +49,10 @@ class App extends Component {
 
   render() {
     return (
-      <Dashboard />
+      <>
+        
+        <Dashboard />
+      </>
     );
   }
 }

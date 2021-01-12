@@ -11,6 +11,7 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const Journal = require("./models/journal");
 
 // import authentication library
 const auth = require("./auth");
@@ -41,6 +42,16 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+
+router.get("/journal", (req, res) => {
+  // empty selector means get all documents
+  Journal.find(req.query).then((journal) => res.send(journal));
+});
+
+router.post("/journal", (req, res) => {
+  const newJournal = new Journal(req.body);
+  Journal.findOneAndUpdate({owner: req.body.owner, day: req.body.day}, req.body, {upsert: true}).then((journal) => res.send(journal));
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

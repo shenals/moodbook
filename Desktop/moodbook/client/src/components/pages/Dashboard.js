@@ -14,9 +14,11 @@ class Dashboard extends Component {
     const curTime = new Date();
     this.state = {
       userId: undefined,
-      date: curTime.getDate(),
-      month: curTime.getMonth() + 1,
-      year: curTime.getFullYear(),
+      date: {
+        day: curTime.getDate(),
+        month: curTime.getMonth() + 1,
+        year: curTime.getFullYear(),
+      },
     };
   }
 
@@ -31,15 +33,16 @@ class Dashboard extends Component {
         <div className="Journal-subContainer">
           <Calendar onClickDay={(value, event) => {
               this.setState({
-                date: value.getDate(),
-                month: value.getMonth() + 1,
-                year: value.getFullYear(),
+                date: {
+                  day: value.getDate(),
+                  month: value.getMonth() + 1,
+                  year: value.getFullYear(),
+                }
               })
             }}/>
-          <div>Selected date: {this.state.year}/{this.state.month}/{this.state.date}</div>
         </div>
         <div className="Journal-subContainer">
-          <Journal />
+          <Journal date={this.state.date}/>
         </div>
       </div>
       </>
