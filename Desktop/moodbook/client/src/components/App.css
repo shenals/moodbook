@@ -1,0 +1,5 @@
+.Journal-subContainer {
+    flex-grow: 0;
+    flex-basis: 0;
+    margin-left: var(--s);
+}

@@ -46,6 +46,12 @@ form {
   display: flex;
 }
 
+textarea {
+  resize: none;
+  width: 300px;
+  height: 200px;
+}
+
 .u-flexColumn {
   display: flex;
   flex-direction: column;
