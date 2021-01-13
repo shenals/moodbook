@@ -54,7 +54,7 @@ router.post("/journal", (req, res) => {
 
 router.get("/users", (req, res) => {
   // empty selector means get all documents
-  User.find(req.query).then((user) => res.send(user));
+  User.findOne(req.query).then((user) => res.send(user));
 });
 
 router.post("/users", (req, res) => {

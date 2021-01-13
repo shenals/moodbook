@@ -11,45 +11,8 @@ class Journal extends Component {
     // Initialize Default State
     this.state = {
       text: "",
-      moods: [
-        {
-          name: "happy",
-          emoji: "😄",
-          category: "emotion",
-        },
-        {
-          name: "excited",
-          emoji: "🤩",
-          category: "emotion",
-        },
-      ],
-      allMoods: [
-        {
-          name: "happy",
-          emoji: "😄",
-          category: "emotion",
-        },
-        {
-          name: "sad",
-          emoji: "😞",
-          category: "emotion",
-        },
-        {
-          name: "excited",
-          emoji: "🤩",
-          category: "emotion",
-        },
-        {
-          name: "hosed",
-          emoji: "😵",
-          category: "emotion",
-        },
-        {
-          name: "bored",
-          emoji: "🥱",
-          category: "emotion",
-        },
-      ],
+      moods: [],
+      allMoods: [],
     };
   }
 
@@ -112,6 +75,11 @@ class Journal extends Component {
       month: this.props.date.month,
       year: this.props.date.year,
     };
+    get("/api/users", {_id: this.props.userId}).then((user) => {
+      this.setState({
+        allMoods: user.moods,
+      });
+    });
     get("/api/journal", body).then((journal) => {
       if(journal.length == 0){
         this.setState({

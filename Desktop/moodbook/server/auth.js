@@ -42,6 +42,16 @@ function getOrCreateUser(user) {
           emoji: "🤩",
           category: "emotion",
         },
+        {
+          name: "hosed",
+          emoji: "😵",
+          category: "emotion",
+        },
+        {
+          name: "bored",
+          emoji: "🥱",
+          category: "emotion",
+        },
       ],
     });
 
