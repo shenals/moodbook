@@ -5,8 +5,6 @@ import "../App.css";
 
 import { get, post } from "../../utilities";
 
-const userId = "obama";
-
 class Journal extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +55,7 @@ class Journal extends Component {
 
   handleClickCurMood = (mood) => {
     const body = {
-      owner: userId,
+      owner: this.props.userId,
       day: this.props.date.day,
       month: this.props.date.month,
       year: this.props.date.year,
@@ -71,7 +69,7 @@ class Journal extends Component {
 
   handleClickAllMoods = (mood) => {
     const body = {
-      owner: userId,
+      owner: this.props.userId,
       day: this.props.date.day,
       month: this.props.date.month,
       year: this.props.date.year,
@@ -93,7 +91,7 @@ class Journal extends Component {
       {text: event.target.value},
     );
     const body = {
-      owner: userId,
+      owner: this.props.userId,
       day: this.props.date.day,
       month: this.props.date.month,
       year: this.props.date.year,
@@ -109,7 +107,7 @@ class Journal extends Component {
 
   componentDidMount() {
     const body = {
-      owner: userId,
+      owner: this.props.userId,
       day: this.props.date.day,
       month: this.props.date.month,
       year: this.props.date.year,
@@ -133,7 +131,7 @@ class Journal extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.date !== this.props.date) {
       const body = {
-        owner: userId,
+        owner: this.props.userId,
         day: this.props.date.day,
         month: this.props.date.month,
         year: this.props.date.year,

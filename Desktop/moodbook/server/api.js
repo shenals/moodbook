@@ -49,8 +49,16 @@ router.get("/journal", (req, res) => {
 });
 
 router.post("/journal", (req, res) => {
-  const newJournal = new Journal(req.body);
-  Journal.findOneAndUpdate({owner: req.body.owner, day: req.body.day}, req.body, {upsert: true}).then((journal) => res.send(journal));
+  Journal.findOneAndUpdate({owner: req.body.owner, day: req.body.day, month: req.body.month, year: req.body.year}, req.body, {upsert: true}).then((journal) => res.send(journal));
+});
+
+router.get("/users", (req, res) => {
+  // empty selector means get all documents
+  User.find(req.query).then((user) => res.send(user));
+});
+
+router.post("/users", (req, res) => {
+  User.findOneAndUpdate({_id: req.body._id}, req.body).then((user) => res.send(user));
 });
 
 // anything else falls to this "not found" case
