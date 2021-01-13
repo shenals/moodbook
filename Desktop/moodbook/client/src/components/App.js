@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Dashboard from "./pages/Dashboard.js";
+import Overview from "./pages/Overview.js"
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import 'react-calendar/dist/Calendar.css';
@@ -62,7 +63,10 @@ class App extends Component {
             onLogoutSuccess={this.handleLogout}
             onFailure={(err) => console.log(err)}
           />
-          <Dashboard userName = {this.state.userName} userId={this.state.userId}/>
+          <Router>
+            <Dashboard path="/" userName = {this.state.userName} userId={this.state.userId}/>
+            <Overview path="/overview" userId={this.state.userId} />
+          </Router>
           </>
         ) : (
           <GoogleLogin

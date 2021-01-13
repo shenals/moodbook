@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Calendar from "react-calendar";
 import Journal from "./Journal.js";
+import GoogleLogin, { GoogleLogout } from "react-google-login";
+import Overview from "./Overview.js"
 
 import { get, post } from "../../utilities";
 
@@ -8,7 +10,6 @@ import 'react-calendar/dist/Calendar.css';
 
 import "../../utilities.css";
 import "../App.css";
-import Overview from "./Overview.js";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -36,11 +37,11 @@ class Dashboard extends Component {
   render() {
     return (
       <>
-        {this.state.userName ? (
-          <div>Welcome to Moodbook, {this.state.userName}!</div>
-        ) : (
-          <div>Welcome to Moodbook, {this.props.userName}!</div>
-        )}   
+      {this.state.userName ? (
+        <div>Welcome to Moodbook, {this.state.userName}!</div>
+      ) : (
+        <div>Welcome to Moodbook, {this.props.userName}!</div>
+      )} 
       <div className="u-flex">
         <div className="Journal-subContainer">
           <Calendar onClickDay={(value, event) => {
@@ -56,9 +57,6 @@ class Dashboard extends Component {
         <div className="Journal-subContainer">
           <Journal userId={this.props.userId} date={this.state.date}/>
         </div>
-      </div>
-      <div>
-        <Overview userId={this.props.userId} />
       </div>
       </>
     );
