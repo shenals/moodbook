@@ -59,12 +59,18 @@ class Overview extends Component {
     ));
     return (
       <>
-        <div>Your Moodbook Review</div>
-        <br/>
-        <div>Total journal entries: {this.state.journals.length}</div>
-        <br/>
-        <div>Most common moods:</div>
-        <div>{moodDiv}</div>
+      {this.state.journals.length !== 0 ? (
+        <>
+          <div>Your Moodbook Overview</div>
+          <br/>
+          <div>Total journal entries: {this.state.journals.length}</div>
+          <br/>
+          <div>Most common moods:</div>
+          <div>{moodDiv}</div>
+        </>
+      ) : (
+        <div>loading...</div>
+      )}
       </>
     );
   }

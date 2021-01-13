@@ -38,11 +38,9 @@ class Dashboard extends Component {
     return (
       <>
       {this.state.userName ? (
+        <>
         <div>Welcome to Moodbook, {this.state.userName}!</div>
-      ) : (
-        <div>Welcome to Moodbook, {this.props.userName}!</div>
-      )} 
-      <div className="u-flex">
+        <div className="u-flex">
         <div className="Journal-subContainer">
           <Calendar onClickDay={(value, event) => {
               this.setState({
@@ -58,6 +56,10 @@ class Dashboard extends Component {
           <Journal userId={this.props.userId} date={this.state.date}/>
         </div>
       </div>
+      </>
+      ) : (
+        <div>loading...</div>
+      )} 
       </>
     );
   }

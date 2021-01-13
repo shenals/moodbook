@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Dashboard from "./pages/Dashboard.js";
 import Overview from "./pages/Overview.js"
 import GoogleLogin, { GoogleLogout } from "react-google-login";
+import NavBar from "./NavBar.js"
 
 import 'react-calendar/dist/Calendar.css';
 
@@ -55,26 +56,16 @@ class App extends Component {
   render() {
     return (
       <>
-        {this.state.userId ? (
-          <>
-          <GoogleLogout
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Logout"
-            onLogoutSuccess={this.handleLogout}
-            onFailure={(err) => console.log(err)}
-          />
+        <NavBar
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+          userId={this.state.userId}
+        />
+        {this.state.userId && (
           <Router>
-            <Dashboard path="/" userName = {this.state.userName} userId={this.state.userId}/>
+            <Dashboard path="/" userName={this.state.userName} userId={this.state.userId}/>
             <Overview path="/overview" userId={this.state.userId} />
           </Router>
-          </>
-        ) : (
-          <GoogleLogin
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={this.handleLogin}
-            onFailure={(err) => console.log(err)}
-          />
         )}
       </>
     );
