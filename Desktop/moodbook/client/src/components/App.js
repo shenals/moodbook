@@ -3,7 +3,6 @@ import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Dashboard from "./pages/Dashboard.js";
 import Overview from "./pages/Overview.js"
-import GoogleLogin, { GoogleLogout } from "react-google-login";
 import NavBar from "./NavBar.js"
 
 import 'react-calendar/dist/Calendar.css';
@@ -14,8 +13,6 @@ import "./App.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
-
-const GOOGLE_CLIENT_ID = "616012024531-v5eduh9f5cm3lata519730qdr1baeegc.apps.googleusercontent.com";
 
 /**
  * Define the "App" component as a class.

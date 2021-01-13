@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 // This identifies your application to Google's authentication service
@@ -14,18 +14,23 @@ class NavBar extends Component {
   }
 
   render() {
+    if(!this.props.userId){
+      navigate("/");
+    }
     return (
       <nav>
         <div>Moodbook</div>
         <div>
-          <Link to="/">
-            Home
-          </Link>
-          <br/>
           {this.props.userId && (
+            <>
+            <Link to="/">
+              Home
+            </Link>
+            <br/>
             <Link to="/overview">
               Overview
             </Link>
+            </>
           )}
           <br/>
           {this.props.userId ? (
