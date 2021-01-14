@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Dashboard from "./pages/Dashboard.js";
 import Overview from "./pages/Overview.js"
 import NavBar from "./NavBar.js"
+import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import 'react-calendar/dist/Calendar.css';
 
@@ -13,6 +14,8 @@ import "./App.css";
 import { socket } from "../client-socket.js";
 
 import { get, post } from "../utilities";
+
+const GOOGLE_CLIENT_ID = "616012024531-v5eduh9f5cm3lata519730qdr1baeegc.apps.googleusercontent.com";
 
 /**
  * Define the "App" component as a class.
@@ -64,8 +67,22 @@ class App extends Component {
             <Overview path="/overview" userId={this.state.userId} />
           </Router>
         ) : (
-          <div className="u-centered u-title">
-            Welcome to Moodbook!
+          <div className="u-centered">
+            <div className="u-title">Welcome to Moodbook!</div>
+            <div className="u-center">
+              <div>
+                <br/>
+                Moodbook is a daily personal journal that doubles up
+                as a mood tracker.
+              </div>
+              <br/>             
+              <GoogleLogin
+              clientId={GOOGLE_CLIENT_ID}
+              buttonText="Log in with Google"
+              onSuccess={this.handleLogin}
+              onFailure={(err) => console.log(err)}
+            />
+            </div>
           </div>
         )}
       </>

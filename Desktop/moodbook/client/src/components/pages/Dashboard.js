@@ -36,18 +36,19 @@ class Dashboard extends Component {
   }
 
   render() {
-    const title = "Welcome to Moodbook, " + this.state.userName + "!"
+    const title = this.state.userName ? "Welcome to Moodbook, " + this.state.userName + "!" 
+    : "Welcome to Moodbook!";
     return (
       <>
       <TopBar title={title}/>
       {this.state.userName ? (
         <>
-        <div className="u-flex u-flex-alignCenter">
-        <div className="Dashboard-subContainer">
+        <div className="u-flex u-flex-alignCenter u-flex-justifyCenter">
+        <div className="Dashboard-subContainer u-inlineblock">
           <Journal userId={this.props.userId} date={this.state.date}/>
         </div>
-        <div className="Dashboard-subContainer">
-          <Calendar onClickDay={(value, event) => {
+        <div className="Dashboard-subContainer u-inlineblock">
+          <Calendar className="Dashboard-calendar" onClickDay={(value, event) => {
               this.setState({
                 date: {
                   day: value.getDate(),

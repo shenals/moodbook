@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import TopBar from "../TopBar.js";
+import Rodal from 'rodal';
 
 import { get, post } from "../../utilities";
 
 import 'react-calendar/dist/Calendar.css';
 
 import "../../utilities.css";
+import 'rodal/lib/rodal.css';
 import "../App.css";
 
 class Overview extends Component {
@@ -17,6 +19,8 @@ class Overview extends Component {
       userName: null,
       moods: [],
       journals: [],
+      createRodal: false,
+      createName: "",
     };
   }
 
@@ -42,6 +46,25 @@ class Overview extends Component {
       return -1;
     }
     return 0;
+  }
+
+  openCreateRodal = () => {
+    this.setState({
+      createRodal: true,
+    });
+  }
+
+  closeCreateRodal = () => {
+    this.setState({
+      createRodal: false,
+    });
+    document.getElementById("createForm").reset();
+  }
+
+  handleCreateSubmit = () => {
+    this.setState({
+      createRodal: false,
+    });
   }
 
   render() {
@@ -72,6 +95,28 @@ class Overview extends Component {
       ) : (
         <div>loading...</div>
       )}
+      <button onClick={this.openCreateRodal}>show</button> 
+      <Rodal visible={this.state.createRodal} onClose={this.closeCreateRodal}>
+        <div>Create new mood</div>
+        <form id="createForm">
+          <label>
+            Name:
+            <input type="text"/>
+          </label>
+          <br/>
+          <label>
+            Category:
+            <input type="text"/>
+          </label>
+          <br/>
+          <label>
+            Emoji:
+            <input type="text"/>
+          </label>
+          <br/>
+          <input type="button" onClick={this.handleCreateSubmit} value="Submit" />
+        </form>
+      </Rodal>
       </>
     );
   }
