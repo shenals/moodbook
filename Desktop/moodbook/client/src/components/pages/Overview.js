@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import TopBar from "../TopBar.js";
 import Rodal from 'rodal';
+import Picker from 'emoji-picker-react';
 
 import { get, post } from "../../utilities";
 
@@ -9,6 +10,7 @@ import 'react-calendar/dist/Calendar.css';
 import "../../utilities.css";
 import 'rodal/lib/rodal.css';
 import "../App.css";
+import "./Overview.css";
 
 class Overview extends Component {
   constructor(props) {
@@ -20,11 +22,27 @@ class Overview extends Component {
       moods: [],
       journals: [],
       createRodal: false,
-      createName: "",
+      name: "",
+      category: "",
+      selectedEmoji: null,
     };
   }
 
   componentDidMount() {
+    get("/api/users", {_id: this.props.userId}).then((user) => {
+      this.setState({
+        userName: user.name,
+        moods: user.moods,
+      });
+    });
+    get("/api/journal", {owner: this.props.userId}).then((journals) => {
+      this.setState({
+        journals: journals,
+      });
+    });
+  }
+
+  componentDidUpdate() {
     get("/api/users", {_id: this.props.userId}).then((user) => {
       this.setState({
         userName: user.name,
@@ -65,6 +83,51 @@ class Overview extends Component {
     this.setState({
       createRodal: false,
     });
+    const newMood = {
+      name: this.state.name,
+      emoji: this.state.selectedEmoji,
+      category: this.state.category,
+    };
+    const body = {
+      _id: this.props.userId,
+      moods: [...this.state.moods, newMood],
+    };
+    post("/api/users", body);
+  }
+
+  handleDeleteSubmit = () => {
+    this.setState({
+      createRodal: false,
+      moods: this.state.moods.filter((mood) => mood.name !== "funny"),
+    });
+    const body = {
+      _id: this.props.userId,
+      moodName: "funny",
+    };
+    post("/api/moods", body);
+    post("/api/users", {_id: this.props.userId, moods: this.state.moods.filter((mood) => mood.name !== "funny")});
+  }
+
+  onEmojiClick = (event, emojiObject) => {
+    this.setState({
+      selectedEmoji: emojiObject.emoji,
+    });
+  }
+
+  handleOnNameChange = (event) => {
+    this.setState(
+      {name: event.target.value},
+    );
+  }
+
+  handleOnCategoryChange = (event) => {
+    this.setState(
+      {category: event.target.value},
+    );
+  }
+
+  handleClickMood = (mood) => {
+
   }
 
   render() {
@@ -81,6 +144,9 @@ class Overview extends Component {
         <span>{mood.mood.emoji} {mood.mood.name} {mood.count}</span>
       </div>
     ));
+    const moodList = this.state.moods.map((mood) => (
+      <button className="Overview-moodButton" onClick={() => this.handleClickMood(mood)}> {mood.emoji} {mood.name} </button>
+    ));
     return (
       <>
       <TopBar title="Your Moodbook Overview" />
@@ -91,30 +157,33 @@ class Overview extends Component {
           <br/>
           <div>Most common moods:</div>
           <div>{moodDiv}</div>
+          <br/>
+          <div>Manage moods</div>
+          <div>{moodList}</div>
         </>
       ) : (
         <div>loading...</div>
       )}
-      <button onClick={this.openCreateRodal}>show</button> 
-      <Rodal visible={this.state.createRodal} onClose={this.closeCreateRodal}>
+      <button onClick={this.openCreateRodal}>Create new mood</button> 
+      <Rodal height={480} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
         <div>Create new mood</div>
         <form id="createForm">
           <label>
             Name:
-            <input type="text"/>
+            <input onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
           <label>
             Category:
-            <input type="text"/>
+            <input onChange={this.handleOnCategoryChange} type="text"/>
           </label>
           <br/>
           <label>
-            Emoji:
-            <input type="text"/>
+            Emoji: {this.state.selectedEmoji}
+            <Picker onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
-          <input type="button" onClick={this.handleCreateSubmit} value="Submit" />
+          <input type="button" onClick={this.handleDeleteSubmit} value="Submit" />
         </form>
       </Rodal>
       </>

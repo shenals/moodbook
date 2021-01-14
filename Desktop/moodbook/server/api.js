@@ -52,6 +52,10 @@ router.post("/journal", (req, res) => {
   Journal.findOneAndUpdate({owner: req.body.owner, day: req.body.day, month: req.body.month, year: req.body.year}, req.body, {upsert: true}).then((journal) => res.send(journal));
 });
 
+router.post("/moods", (req, res) => {
+  Journal.updateMany({owner: req.body._id}, { $pull: { moods: { name: req.body.moodName } } }).then((journal) => res.send(journal));
+});
+
 router.get("/users", (req, res) => {
   // empty selector means get all documents
   User.findOne(req.query).then((user) => res.send(user));
