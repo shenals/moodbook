@@ -22,8 +22,10 @@ class Overview extends Component {
       moods: [],
       journals: [],
       createRodal: false,
+      editRodal: false,
       name: "",
       category: "",
+      selectedMood: null,
       selectedEmoji: null,
     };
   }
@@ -43,6 +45,10 @@ class Overview extends Component {
   }
 
   componentDidUpdate() {
+
+  }
+
+  updateOverview = () => {
     get("/api/users", {_id: this.props.userId}).then((user) => {
       this.setState({
         userName: user.name,
@@ -79,6 +85,19 @@ class Overview extends Component {
     document.getElementById("createForm").reset();
   }
 
+  openEditRodal = () => {
+    this.setState({
+      editRodal: true,
+    });
+  }
+
+  closeEditRodal = () => {
+    this.setState({
+      editRodal: false,
+    });
+    document.getElementById("editForm").reset();
+  }
+
   handleCreateSubmit = () => {
     this.setState({
       createRodal: false,
@@ -92,20 +111,20 @@ class Overview extends Component {
       _id: this.props.userId,
       moods: [...this.state.moods, newMood],
     };
-    post("/api/users", body);
+    post("/api/users", body).then(this.updateOverview());
   }
 
   handleDeleteSubmit = () => {
     this.setState({
-      createRodal: false,
-      moods: this.state.moods.filter((mood) => mood.name !== "funny"),
+      editRodal: false,
     });
+    const newMoods = this.state.moods.filter((mood) => mood.name !== this.state.selectedMood.name)
     const body = {
       _id: this.props.userId,
-      moodName: "funny",
+      moodName: this.state.selectedMood.name,
     };
-    post("/api/moods", body);
-    post("/api/users", {_id: this.props.userId, moods: this.state.moods.filter((mood) => mood.name !== "funny")});
+    post("/api/moods", body).then(this.updateOverview());
+    post("/api/users", {_id: this.props.userId, moods: newMoods}).then(this.updateOverview());
   }
 
   onEmojiClick = (event, emojiObject) => {
@@ -127,7 +146,12 @@ class Overview extends Component {
   }
 
   handleClickMood = (mood) => {
-
+    this.setState({
+      editRodal: true,
+      selectedMood: mood,
+      name: mood.name,
+      category: mood.category,
+    });
   }
 
   render() {
@@ -140,12 +164,12 @@ class Overview extends Component {
     );
     moodCount.sort( this.compareMoods );
     const moodDiv = moodCount.map((mood) => (
-      <div>
+      <div key={mood.mood.name}>
         <span>{mood.mood.emoji} {mood.mood.name} {mood.count}</span>
       </div>
     ));
     const moodList = this.state.moods.map((mood) => (
-      <button className="Overview-moodButton" onClick={() => this.handleClickMood(mood)}> {mood.emoji} {mood.name} </button>
+      <button key={mood.name} className="Overview-moodButton" onClick={() => this.handleClickMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
     return (
       <>
@@ -183,7 +207,28 @@ class Overview extends Component {
             <Picker onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
-          <input type="button" onClick={this.handleDeleteSubmit} value="Submit" />
+          <input disabled={!this.state.selectedEmoji} type="button" onClick={this.handleCreateSubmit} value="Create mood" />
+        </form>
+      </Rodal>
+      <Rodal height={480} visible={this.state.editRodal} onClose={this.closeEditRodal}>
+        <div>Edit mood</div>
+        <form id="editForm">
+          <label>
+            Name:
+            <input value={this.state.name} onChange={this.handleOnNameChange} type="text"/>
+          </label>
+          <br/>
+          <label>
+            Category:
+            <input value={this.state.category} onChange={this.handleOnCategoryChange} type="text"/>
+          </label>
+          <br/>
+          <label>
+            Emoji: {this.state.selectedEmoji}
+            <Picker onEmojiClick={this.onEmojiClick} />
+          </label>
+          <br/>
+          <input type="button" onClick={this.handleDeleteSubmit} value="Delete mood" />
         </form>
       </Rodal>
       </>

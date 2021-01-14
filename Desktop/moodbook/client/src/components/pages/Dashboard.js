@@ -43,12 +43,12 @@ class Dashboard extends Component {
       <TopBar title={title}/>
       {this.state.userName ? (
         <>
-        <div className="u-flex u-flex-alignCenter u-flex-justifyCenter">
+        <div className="u-flex">
         <div className="Dashboard-subContainer u-inlineblock">
           <Journal userId={this.props.userId} date={this.state.date}/>
         </div>
         <div className="Dashboard-subContainer u-inlineblock">
-          <Calendar className="Dashboard-calendar" onClickDay={(value, event) => {
+          <Calendar className="Dashboard-calendar" onClickDay={(value) => {
               this.setState({
                 date: {
                   day: value.getDate(),

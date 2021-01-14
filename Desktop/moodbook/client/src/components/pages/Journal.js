@@ -146,10 +146,10 @@ class Journal extends Component {
       "December",
     ];
     const moodList = this.state.moods.map((mood) => (
-      <button className="Journal-moodButton" onClick={() => this.handleClickCurMood(mood)}> {mood.emoji} {mood.name} </button>
+      <button key={mood.name} className="Journal-moodButton" onClick={() => this.handleClickCurMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
     const allMoodList = this.state.allMoods.map((mood) => (
-      <button className="Journal-moodButton" onClick={() => this.handleClickAllMoods(mood)} disabled={this.handleDisableMood(mood)}> {mood.emoji} {mood.name} </button>
+      <button key={mood.name} className="Journal-moodButton" onClick={() => this.handleClickAllMoods(mood)} disabled={this.handleDisableMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
     return (
       <>
