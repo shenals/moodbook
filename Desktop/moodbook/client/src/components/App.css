@@ -1,9 +1,0 @@
-.Journal-subContainer {
-    flex-grow: 1;
-    flex-basis: 0;
-    margin-left: var(--m);
-}
-
-.MoodButton {
-    margin-left: var(--s);
-}

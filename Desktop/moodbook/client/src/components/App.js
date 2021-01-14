@@ -58,11 +58,15 @@ class App extends Component {
           handleLogout={this.handleLogout}
           userId={this.state.userId}
         />
-        {this.state.userId && (
+        {this.state.userId ? (
           <Router>
             <Dashboard path="/" userName={this.state.userName} userId={this.state.userId}/>
             <Overview path="/overview" userId={this.state.userId} />
           </Router>
+        ) : (
+          <div className="u-centered u-title">
+            Welcome to Moodbook!
+          </div>
         )}
       </>
     );

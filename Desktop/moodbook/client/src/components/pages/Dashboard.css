@@ -1,0 +1,9 @@
+.Dashboard-subContainer {
+    flex-grow: 1;
+    flex-basis: 100px;
+    margin-left: 100px;
+}
+
+.Dashboard-calendar {
+    font-family: 'Source Sans Pro', sans-serif;
+}

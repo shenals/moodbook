@@ -1,0 +1,31 @@
+.TopBar-container {
+  padding: 20px var(--m);
+  background-color: var(--grey);
+}
+
+.TopBar-title {
+  font-size: 24px;
+}
+
+.TopBar-linkContainer {
+  margin-left: var(--l);
+}
+
+.TopBar-link,
+.TopBar-link:visited {
+  color: var(--white);
+  opacity: 0.6;
+  text-decoration: none;
+}
+
+.TopBar-link:hover {
+  opacity: 0.8;
+}
+
+.TopBar-link.TopBar-login {
+  opacity: 1;
+}
+
+.TopBar-link + .TopBar-link {
+  margin-left: var(--m);
+}

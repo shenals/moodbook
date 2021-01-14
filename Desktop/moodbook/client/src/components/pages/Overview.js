@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TopBar from "../TopBar.js";
 
 import { get, post } from "../../utilities";
 
@@ -59,9 +60,9 @@ class Overview extends Component {
     ));
     return (
       <>
+      <TopBar title="Your Moodbook Overview" />
       {this.state.journals.length !== 0 ? (
         <>
-          <div>Your Moodbook Overview</div>
           <br/>
           <div>Total journal entries: {this.state.journals.length}</div>
           <br/>

@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import Calendar from "react-calendar";
 import Journal from "./Journal.js";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
-import Overview from "./Overview.js"
+import Overview from "./Overview.js";
+import TopBar from "../TopBar.js";
 
 import { get, post } from "../../utilities";
 
 import 'react-calendar/dist/Calendar.css';
 
 import "../../utilities.css";
-import "../App.css";
+import "./Dashboard.css";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -35,13 +36,17 @@ class Dashboard extends Component {
   }
 
   render() {
+    const title = "Welcome to Moodbook, " + this.state.userName + "!"
     return (
       <>
+      <TopBar title={title}/>
       {this.state.userName ? (
         <>
-        <div>Welcome to Moodbook, {this.state.userName}!</div>
-        <div className="u-flex">
-        <div className="Journal-subContainer">
+        <div className="u-flex u-flex-alignCenter">
+        <div className="Dashboard-subContainer">
+          <Journal userId={this.props.userId} date={this.state.date}/>
+        </div>
+        <div className="Dashboard-subContainer">
           <Calendar onClickDay={(value, event) => {
               this.setState({
                 date: {
@@ -51,9 +56,6 @@ class Dashboard extends Component {
                 }
               })
             }}/>
-        </div>
-        <div className="Journal-subContainer">
-          <Journal userId={this.props.userId} date={this.state.date}/>
         </div>
       </div>
       </>

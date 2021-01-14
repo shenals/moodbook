@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import "../../utilities.css";
-import "../App.css";
+import "./Journal.css";
 
 import { get, post } from "../../utilities";
 
@@ -13,6 +13,7 @@ class Journal extends Component {
       text: "",
       moods: [],
       allMoods: [],
+      disableTextArea: false,
     };
   }
 
@@ -98,6 +99,10 @@ class Journal extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.date !== this.props.date) {
+      this.setState({
+        disableTextArea: true,
+        text: "fetching journal..."
+      });
       const body = {
         owner: this.props.userId,
         day: this.props.date.day,
@@ -118,22 +123,41 @@ class Journal extends Component {
             moods: journal[0].moods, 
           });
         }
+        this.setState({
+          disableTextArea: false,
+        });
       });
     }
   }
 
   render() {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
     const moodList = this.state.moods.map((mood) => (
-      <button className="MoodButton" onClick={() => this.handleClickCurMood(mood)}> {mood.emoji} {mood.name} </button>
+      <button className="Journal-moodButton" onClick={() => this.handleClickCurMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
     const allMoodList = this.state.allMoods.map((mood) => (
-      <button className="MoodButton" onClick={() => this.handleClickAllMoods(mood)} disabled={this.handleDisableMood(mood)}> {mood.emoji} {mood.name} </button>
+      <button className="Journal-moodButton" onClick={() => this.handleClickAllMoods(mood)} disabled={this.handleDisableMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
     return (
       <>
-        <div>Selected date: {this.props.date.year}/{this.props.date.month}/{this.props.date.day}</div>
-        <textarea onChange={this.handleOnTextChange} value={this.state.text}/>
+        <div>
+        <div>{months[this.props.date.month - 1]} {this.props.date.day}, {this.props.date.year}</div>
+        <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
         <div>{moodList}</div>
+        </div>
         <br/>
         <div>Moods</div>
         <div>{allMoodList}</div>
