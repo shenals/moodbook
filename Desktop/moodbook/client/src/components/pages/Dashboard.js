@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Calendar from "react-calendar";
 import Journal from "./Journal.js";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import Overview from "./Overview.js";
@@ -16,14 +15,8 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    const curTime = new Date();
     this.state = {
       userName: null,
-      date: {
-        day: curTime.getDate(),
-        month: curTime.getMonth() + 1,
-        year: curTime.getFullYear(),
-      },
     };
   }
 
@@ -45,18 +38,10 @@ class Dashboard extends Component {
         <>
         <div className="u-flex">
         <div className="Dashboard-subContainer u-inlineblock">
-          <Journal userId={this.props.userId} date={this.state.date}/>
+          <Journal userId={this.props.userId}/>
         </div>
         <div className="Dashboard-subContainer u-inlineblock">
-          <Calendar className="Dashboard-calendar" onClickDay={(value) => {
-              this.setState({
-                date: {
-                  day: value.getDate(),
-                  month: value.getMonth() + 1,
-                  year: value.getFullYear(),
-                }
-              })
-            }}/>
+          
         </div>
       </div>
       </>

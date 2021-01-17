@@ -64,6 +64,10 @@ form {
   display: flex;
 }
 
+.u-flex-wrap {
+  flex-wrap: wrap;
+}
+
 .u-flexColumn {
   display: flex;
   flex-direction: column;

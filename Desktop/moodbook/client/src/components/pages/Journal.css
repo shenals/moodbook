@@ -5,3 +5,8 @@
     margin-left: var(--s);
     font-family: 'Source Sans Pro', sans-serif;
 }
+
+.Journal-subContainer {
+    flex-grow: 1;
+    flex-basis: 0;
+}

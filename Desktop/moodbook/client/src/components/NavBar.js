@@ -32,6 +32,9 @@ class NavBar extends Component {
             <Link to="/overview" className="NavBar-link">
               Overview
             </Link>
+            <Link to="/manage" className="NavBar-link">
+              Manage
+            </Link>
             </>
           )}
           {this.props.userId && (

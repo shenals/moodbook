@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Calendar from "react-calendar";
+
+import 'react-calendar/dist/Calendar.css';
 
 import "../../utilities.css";
 import "./Journal.css";
@@ -9,20 +12,26 @@ class Journal extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
+    const curTime = new Date();
     this.state = {
       text: "",
       moods: [],
       allMoods: [],
       disableTextArea: false,
+      date: {
+        day: curTime.getDate(),
+        month: curTime.getMonth() + 1,
+        year: curTime.getFullYear(),
+      },
     };
   }
 
   handleClickCurMood = (mood) => {
     const body = {
       owner: this.props.userId,
-      day: this.props.date.day,
-      month: this.props.date.month,
-      year: this.props.date.year,
+      day: this.state.date.day,
+      month: this.state.date.month,
+      year: this.state.date.year,
       moods: this.state.moods.filter((value) => value.name !== mood.name),
     };
     post("/api/journal", body);
@@ -34,9 +43,9 @@ class Journal extends Component {
   handleClickAllMoods = (mood) => {
     const body = {
       owner: this.props.userId,
-      day: this.props.date.day,
-      month: this.props.date.month,
-      year: this.props.date.year,
+      day: this.state.date.day,
+      month: this.state.date.month,
+      year: this.state.date.year,
       moods: [...this.state.moods, mood],
     };
     post("/api/journal", body);
@@ -56,9 +65,9 @@ class Journal extends Component {
     );
     const body = {
       owner: this.props.userId,
-      day: this.props.date.day,
-      month: this.props.date.month,
-      year: this.props.date.year,
+      day: this.state.date.day,
+      month: this.state.date.month,
+      year: this.state.date.year,
       text: event.target.value,
       moods: this.state.moods,
     };
@@ -72,9 +81,9 @@ class Journal extends Component {
   componentDidMount() {
     const body = {
       owner: this.props.userId,
-      day: this.props.date.day,
-      month: this.props.date.month,
-      year: this.props.date.year,
+      day: this.state.date.day,
+      month: this.state.date.month,
+      year: this.state.date.year,
     };
     get("/api/users", {_id: this.props.userId}).then((user) => {
       this.setState({
@@ -97,17 +106,17 @@ class Journal extends Component {
     });
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.date !== this.props.date) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.date !== this.state.date) {
       this.setState({
         disableTextArea: true,
         text: "fetching journal..."
       });
       const body = {
         owner: this.props.userId,
-        day: this.props.date.day,
-        month: this.props.date.month,
-        year: this.props.date.year,
+        day: this.state.date.day,
+        month: this.state.date.month,
+        year: this.state.date.year,
       };
       //alert(JSON.stringify(body));
       get("/api/journal", body).then((journal) => {
@@ -153,14 +162,29 @@ class Journal extends Component {
     ));
     return (
       <>
-        <div>
-        <div>{months[this.props.date.month - 1]} {this.props.date.day}, {this.props.date.year}</div>
-        <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
-        <div>{moodList}</div>
+        <div className="u-flex u-flex-wrap">
+        <div className="Journal-subContainer">
+          <Calendar onClickDay={(value) => {
+            this.setState({
+              date: {
+                day: value.getDate(),
+                month: value.getMonth() + 1,
+                year: value.getFullYear(),
+              }
+            })
+          }}/>
         </div>
-        <br/>
-        <div>Moods</div>
-        <div>{allMoodList}</div>
+        <div className="Journal-subContainer">
+          <div>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</div>
+          <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
+        </div>
+        <div className="Journal-subContainer">
+          <div>Moods</div>
+          <div>{moodList}</div>
+          <div>Add moods</div>
+          <div>{allMoodList}</div>
+        </div>
+        </div>
       </>
     );
   }

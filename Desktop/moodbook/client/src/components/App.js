@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Dashboard from "./pages/Dashboard.js";
-import Overview from "./pages/Overview.js"
+import Overview from "./pages/Overview.js";
+import Manage from "./pages/Manage.js";
 import NavBar from "./NavBar.js"
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 
@@ -65,6 +66,7 @@ class App extends Component {
           <Router>
             <Dashboard path="/" userName={this.state.userName} userId={this.state.userId}/>
             <Overview path="/overview" userId={this.state.userId} />
+            <Manage path="/manage" userId={this.state.userId} />
           </Router>
         ) : (
           <div className="u-centered">

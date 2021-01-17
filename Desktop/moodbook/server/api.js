@@ -52,8 +52,20 @@ router.post("/journal", (req, res) => {
   Journal.findOneAndUpdate({owner: req.body.owner, day: req.body.day, month: req.body.month, year: req.body.year}, req.body, {upsert: true}).then((journal) => res.send(journal));
 });
 
-router.post("/moods", (req, res) => {
+router.post("/moods/delete", (req, res) => {
   Journal.updateMany({owner: req.body._id}, { $pull: { moods: { name: req.body.moodName } } }).then((journal) => res.send(journal));
+});
+
+router.post("/moods/edit", (req, res) => {
+  Journal.updateMany({owner: req.body._id},
+  { $set: { 
+    "moods.$[elem].category" : req.body.category,  
+    "moods.$[elem].emoji" : req.body.emoji,
+    "moods.$[elem].name" : req.body.name,
+  } },
+  {
+    arrayFilters: [ { "elem.name": req.body.prevName } ]
+  }).then((journal) => res.send(journal));
 });
 
 router.get("/users", (req, res) => {
