@@ -48,7 +48,7 @@ textarea
     padding: 19px 20px 0 5px;
     resize: none;
     height: 400px;
-    width: 300px;
+    width: calc(100vw - 450px);
      
     background-image: -webkit-linear-gradient(top , transparent, transparent 19px,#E7EFF8 0);
     

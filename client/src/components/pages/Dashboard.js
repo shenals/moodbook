@@ -40,9 +40,6 @@ class Dashboard extends Component {
         <div className="Dashboard-subContainer u-inlineblock">
           <Journal userId={this.props.userId}/>
         </div>
-        <div className="Dashboard-subContainer u-inlineblock">
-          
-        </div>
       </div>
       </>
       ) : (

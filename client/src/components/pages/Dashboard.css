@@ -1,8 +1,8 @@
 .Dashboard-subContainer {
     flex-grow: 1;
-    margin-left: 100px;
+    margin-top: 30px;
 }
 
-.Dashboard-calendar {
-    
+.Dashboard-moodPanel {
+    width: 500px;
 }

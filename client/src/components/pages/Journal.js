@@ -164,6 +164,10 @@ class Journal extends Component {
       <>
         <div className="u-flex u-flex-wrap">
         <div className="Journal-subContainer">
+          <div>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</div>
+          <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
+        </div>
+        <div className="Journal-subContainer">
           <Calendar onClickDay={(value) => {
             this.setState({
               date: {
@@ -173,16 +177,12 @@ class Journal extends Component {
               }
             })
           }}/>
-        </div>
-        <div className="Journal-subContainer">
-          <div>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</div>
-          <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
-        </div>
-        <div className="Journal-subContainer">
-          <div>Moods</div>
-          <div>{moodList}</div>
-          <div>Add moods</div>
-          <div>{allMoodList}</div>
+          <div>
+            <div>Moods</div>
+            <div>{moodList}</div>
+            <div>Add moods</div>
+            <div>{allMoodList}</div>
+          </div>
         </div>
         </div>
       </>
