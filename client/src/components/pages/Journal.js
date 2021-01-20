@@ -128,7 +128,7 @@ class Journal extends Component {
         }
         else{
           this.setState({
-            text: journal[0].text,
+            text: journal[0].text == null ? "" : journal[0].text,
             moods: journal[0].moods, 
           });
         }

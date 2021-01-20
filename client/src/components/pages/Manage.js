@@ -68,6 +68,7 @@ class Manage extends Component {
   openEditRodal = () => {
     this.setState({
       editRodal: true,
+      selectedEmoji: null,
     });
   }
 
@@ -96,15 +97,16 @@ class Manage extends Component {
   }
 
   handleEditSubmit = () => {
-    const newMoods = this.state.moods.filter((mood) => mood.name !== this.state.selectedMood.name);
+    let newMoods = this.state.moods;
     const newMood = {
       name: this.state.name,
       emoji: this.state.selectedEmoji,
       category: this.state.category,
     };
+    newMoods[newMoods.map(mood => mood.name).indexOf(this.state.selectedMood.name)] = newMood;
     this.setState({
       editRodal: false,
-      moods: [...newMoods, newMood],
+      moods: newMoods,
     });
     const body = {
       _id: this.props.userId,
@@ -115,7 +117,7 @@ class Manage extends Component {
     };
     //alert(JSON.stringify(body));
     post("/api/moods/edit", body);
-    post("/api/users", {_id: this.props.userId, moods: [...newMoods, newMood]});
+    post("/api/users", {_id: this.props.userId, moods: newMoods});
   }
 
   handleDeleteSubmit = () => {
@@ -184,13 +186,9 @@ class Manage extends Component {
             <input onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
-          <label>
-            Category:
-            <input onChange={this.handleOnCategoryChange} type="text"/>
-          </label>
           <br/>
           <label>
-            Emoji: {this.state.selectedEmoji}
+            Emoji: {this.state.selectedEmoji ? this.state.selectedEmoji : "No Emoji Selected"}
             <Picker onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
@@ -205,13 +203,9 @@ class Manage extends Component {
             <input value={this.state.name} onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
-          <label>
-            Category:
-            <input value={this.state.category} onChange={this.handleOnCategoryChange} type="text"/>
-          </label>
           <br/>
           <label>
-            Emoji: {this.state.selectedEmoji}
+            Emoji: {this.state.selectedEmoji ? this.state.selectedEmoji : "No Emoji Selected"}
             <Picker onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
