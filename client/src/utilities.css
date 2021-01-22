@@ -48,12 +48,12 @@ textarea
     border: 1px solid #EEEEEE;
     box-shadow: 1px 1px 0 #DDDDDD;
     margin: 2% auto;
-    font-size: 1.3rem;
+    font-size: 1.3em;
     resize: none;
-    height: 30rem;
+    height: 30em;
     width: calc(100vw - 450px);
      
-    background-image: -webkit-linear-gradient(top , transparent, transparent 19px,#E7EFF8 0);
+    background-image: -webkit-linear-gradient(top , transparent, transparent 1.1em,#E7EFF8 0);
     
     -webkit-background-size:  100% 20px;
     background-size: 100% 20px;
