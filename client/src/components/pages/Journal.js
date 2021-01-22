@@ -79,18 +79,27 @@ class Journal extends Component {
   }
 
   componentDidMount() {
+    let body = null;
     if(this.props.date) {
       this.setState({
         date: this.props.date,
       });
       this.props.setDate(null);
+      body = {
+        owner: this.props.userId,
+        day: this.props.date.day,
+        month: this.props.date.month,
+        year: this.props.date.year,
+      };
     }
-    const body = {
-      owner: this.props.userId,
-      day: this.state.date.day,
-      month: this.state.date.month,
-      year: this.state.date.year,
-    };
+    else{
+      body = {
+        owner: this.props.userId,
+        day: this.state.date.day,
+        month: this.state.date.month,
+        year: this.state.date.year,
+      };
+    }
     get("/api/users", {_id: this.props.userId}).then((user) => {
       this.setState({
         allMoods: user.moods,
