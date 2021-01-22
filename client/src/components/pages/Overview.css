@@ -3,10 +3,12 @@
     border-radius: 10%;
     box-shadow: none;
     margin-left: var(--s);
-    font-family: 'Source Sans Pro', sans-serif;
+    margin-top: var(--s);
+    font-family: 'Cabin', sans-serif;
 }
 
 .Overview-subContainer {
     width: 45vw;
-    margin-left: 30px;
+    margin-left: var(--l);
+    margin-top: var(--m);
 }

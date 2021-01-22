@@ -4,7 +4,7 @@
     box-shadow: none;
     margin-left: var(--s);
     margin-top: var(--s);
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Cabin', sans-serif;
 }
 
 .Journal-subContainer {
@@ -14,4 +14,8 @@
 
 .Journal-moodPanel {
     width: 100%;
+}
+
+.Journal-calendar {
+    font-family: 'Cabin', sans-serif;
 }

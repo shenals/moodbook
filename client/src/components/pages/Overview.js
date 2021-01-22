@@ -66,9 +66,9 @@ class Overview extends Component {
       <TopBar title="Your Moodbook Overview" />
       {this.state.journals.length !== 0 ? (
         <>
-          <br/>
           <div className="u-flex">
             <div className="Overview-subContainer">
+              <div className="u-title">Quick stats</div>
               <div>Total journal entries: {this.state.journals.length}</div>
               <br/>
               <div>Most common moods:</div>
@@ -76,7 +76,7 @@ class Overview extends Component {
               <br/>
             </div>
             <div className="Overview-subContainer">
-              <div>Filter journal entries from moods:</div>
+              <div className="u-title">Filter journals</div>
               <br/>
               <Search moods={this.state.moods} journals={this.state.journals} setDate={this.props.setDate}/>
             </div>

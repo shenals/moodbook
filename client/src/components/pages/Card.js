@@ -29,9 +29,10 @@ class Card extends Component {
           year: this.props.journal.year,
         })} className="Card">
         <div>
-          {months[this.props.journal.month - 1]} {this.props.journal.day} {this.props.journal.year}
+          {months[this.props.journal.month - 1]} {this.props.journal.day} <br/> {this.props.journal.year}
         </div>
         <div className="Card-emoji">
+          <div className="Card-emoji-null">{(this.props.journal.moods.length == 0) && ("no moods")}</div>
           {this.props.journal.moods.map((mood) => mood.emoji)}
         </div>
       </button>

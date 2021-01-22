@@ -6,10 +6,16 @@
     margin-top: var(--s);
     width: 5em;
     height: 5em;
+    font-family: 'Cabin', sans-serif;
     font-size: 15px;
     background-color: whitesmoke;
 }
 
 .Card-emoji {
     font-size: 12px;
+}
+
+.Card-emoji-null {
+    font-size: 14.7px;
+    color: whitesmoke;
 }

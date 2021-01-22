@@ -17,10 +17,13 @@
 /* TODO: REPLACE WITH YOUR OWN FONT! */
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
 
 :root {
   --primary: #395E66;
   --primary--dim: #72A98F;
+  --secondary: white;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
   --grey: #f7f7f7;
@@ -35,8 +38,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Cabin', sans-serif;
   font-weight: 300;
+  background-color: var(--secondary);
 }
 
 textarea
@@ -125,6 +129,15 @@ form {
 }
 
 .u-title {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
+}
+
+.react-calendar {
+  width: 350px;
+  max-width: 100%;
+  background: white;
+  border: 1px solid #a0a096;
+  font-family: 'Cabin', sans-serif;
+  line-height: 1.125em;
 }

@@ -171,13 +171,20 @@ class Manage extends Component {
       <TopBar title="Manage your Moodbook" />
       {this.state.moods.length !== 0 ? (
         <>
-          <div>Manage moods</div>
-          <div>{moodList}</div>
+          <div className="u-flex">
+            <div className="Overview-subContainer">
+              <div className="u-title">Account Settings</div>
+            </div>
+            <div className="Overview-subContainer">
+              <div className="u-title">Manage moods</div>
+              <div>{moodList}</div>
+              <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button>
+            </div>
+          </div>
         </>
       ) : (
         <div>loading...</div>
-      )}
-      <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button> 
+      )} 
       <Rodal height={480} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
         <div>Create new mood</div>
         <form id="createForm">
@@ -202,7 +209,6 @@ class Manage extends Component {
             Name:
             <input value={this.state.name} onChange={this.handleOnNameChange} type="text"/>
           </label>
-          <br/>
           <br/>
           <label>
             Emoji: {this.state.selectedEmoji ? this.state.selectedEmoji : "No Emoji Selected"}
