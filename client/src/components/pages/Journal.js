@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Calendar from "react-calendar";
+import DatePicker from 'react-date-picker';
 
 import "../../utilities.css";
 import "./Journal.css";
@@ -16,7 +16,9 @@ class Journal extends Component {
       moods: [],
       allMoods: [],
       disableTextArea: false,
+      activeStartDate: curTime,
       date: {
+        dateObj: curTime,
         day: curTime.getDate(),
         month: curTime.getMonth() + 1,
         year: curTime.getFullYear(),
@@ -80,7 +82,13 @@ class Journal extends Component {
     let body = null;
     if(this.props.date) {
       this.setState({
-        date: this.props.date,
+        date: {
+          dateObj: new Date(this.props.date.year, this.props.date.month-1, this.props.date.day),
+          day: this.props.date.day,
+          month: this.props.date.month,
+          year: this.props.date.year,
+        },
+        activeStartDate: new Date(this.props.date.year, this.props.date.month-1, this.props.date.day),
       });
       this.props.setDate(null);
       body = {
@@ -178,18 +186,29 @@ class Journal extends Component {
         <div className="u-flex u-flex-wrap">
         <div className="Journal-subContainer">
           <div>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</div>
-          <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
-        </div>
-        <div className="Journal-subContainer">
-          <Calendar onClickDay={(value) => {
+          <DatePicker
+          activeStartDate={this.state.activeStartDate}
+          onActiveStartDateChange={({ activeStartDate, value, view }) => {
             this.setState({
+              activeStartDate: activeStartDate,
+            })
+          }}
+          value={this.state.date.dateObj}
+          clearIcon={null}
+          onChange={(value) => {
+            this.setState({
+              activeStartDate: value,
               date: {
+                dateObj: value,
                 day: value.getDate(),
                 month: value.getMonth() + 1,
                 year: value.getFullYear(),
               }
             })
           }}/>
+          <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
+        </div>
+        <div className="Journal-subContainer">
           <div>
             <div>Moods</div>
             <div>{moodList}</div>
