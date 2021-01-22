@@ -45,18 +45,17 @@ body {
 
 textarea
 {
-    border: 1px solid #EEEEEE;
-    box-shadow: 1px 1px 0 #DDDDDD;
-    margin: 2% auto;
-    font-size: 1.3em;
+    background-attachment: local;
+    background-image:
+        linear-gradient(to right, white 10px, transparent 10px),
+        linear-gradient(to left, white 10px, transparent 10px),
+        repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white 31px);
+    line-height: 31px;
+    font-size: 20px;
+    padding: 8px 10px;
     resize: none;
-    height: 30em;
+    height: 25em;
     width: calc(100vw - 450px);
-     
-    background-image: -webkit-linear-gradient(top , transparent, transparent 1.1em,#E7EFF8 0);
-    
-    -webkit-background-size:  100% 20px;
-    background-size: 100% 20px;
 }
 
 form {
@@ -72,8 +71,7 @@ form {
     flex-direction: column;
   }
   textarea {
-    width: calc(100vw - 2 * var(--l));
-    margin-right: var(--l);
+    width: calc(100vw - 3 * var(--l));
   }
 }
 
@@ -128,7 +126,7 @@ form {
   position: fixed;
   top: 50%;
   left: 50%;
-  text-align:center;
+  text-align: center;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
