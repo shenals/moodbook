@@ -79,6 +79,12 @@ class Journal extends Component {
   }
 
   componentDidMount() {
+    if(this.props.date) {
+      this.setState({
+        date: this.props.date,
+      });
+      this.props.setDate(null);
+    }
     const body = {
       owner: this.props.userId,
       day: this.state.date.day,

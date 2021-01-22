@@ -1,7 +1,6 @@
 import React, { Component, useState } from "react";
 import TopBar from "../TopBar.js";
-import Rodal from 'rodal';
-import Picker from 'emoji-picker-react';
+import Search from "./Search.js";
 
 import { get, post } from "../../utilities";
 
@@ -68,11 +67,20 @@ class Overview extends Component {
       {this.state.journals.length !== 0 ? (
         <>
           <br/>
-          <div>Total journal entries: {this.state.journals.length}</div>
-          <br/>
-          <div>Most common moods:</div>
-          <div>{moodDiv}</div>
-          <br/>
+          <div className="u-flex">
+            <div className="Overview-subContainer">
+              <div>Total journal entries: {this.state.journals.length}</div>
+              <br/>
+              <div>Most common moods:</div>
+              <div>{moodDiv}</div>
+              <br/>
+            </div>
+            <div className="Overview-subContainer">
+              <div>Filter journal entries from moods:</div>
+              <br/>
+              <Search moods={this.state.moods} journals={this.state.journals} setDate={this.props.setDate}/>
+            </div>
+          </div> 
         </>
       ) : (
         <div>loading...</div>

@@ -3,12 +3,13 @@
     border-radius: 10%;
     box-shadow: none;
     margin-left: var(--s);
+    margin-top: var(--s);
     font-family: 'Source Sans Pro', sans-serif;
 }
 
 .Journal-subContainer {
     flex-basis: 0;
-    margin-left: 30px;
+    margin-left: var(--l);
 }
 
 .Journal-moodPanel {

@@ -177,7 +177,7 @@ class Manage extends Component {
       ) : (
         <div>loading...</div>
       )}
-      <button onClick={this.openCreateRodal}>Create new mood</button> 
+      <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button> 
       <Rodal height={480} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
         <div>Create new mood</div>
         <form id="createForm">

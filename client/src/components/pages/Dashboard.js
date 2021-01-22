@@ -38,7 +38,7 @@ class Dashboard extends Component {
         <>
         <div className="u-flex">
         <div className="Dashboard-subContainer u-inlineblock">
-          <Journal userId={this.props.userId}/>
+          <Journal date={this.props.date} userId={this.props.userId} setDate={this.props.setDate}/>
         </div>
       </div>
       </>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Dashboard from "./pages/Dashboard.js";
 import Overview from "./pages/Overview.js";
@@ -28,6 +28,9 @@ class App extends Component {
     this.state = {
       userId: undefined,
       userName: undefined,
+      date: null,
+      month: null,
+      year: null,
     };
   }
 
@@ -38,6 +41,12 @@ class App extends Component {
         this.setState({ userId: user._id });
       }
     });
+  }
+  setDate = (date) => {
+    this.setState({
+      date: date,
+    });
+    navigate("/");
   }
 
   handleLogin = (res) => {
@@ -64,8 +73,8 @@ class App extends Component {
         />
         {this.state.userId ? (
           <Router>
-            <Dashboard path="/" userName={this.state.userName} userId={this.state.userId}/>
-            <Overview path="/overview" userId={this.state.userId} />
+            <Dashboard path="/" userName={this.state.userName} userId={this.state.userId} date={this.state.date} setDate={this.setDate}/>    
+            <Overview path="/overview" userId={this.state.userId} setDate={this.setDate}/>
             <Manage path="/manage" userId={this.state.userId} />
           </Router>
         ) : (

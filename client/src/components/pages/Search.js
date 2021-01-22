@@ -1,26 +1,15 @@
-import React, { Component, useState } from "react";
-import TopBar from "../TopBar.js";
-import Rodal from 'rodal';
-import Picker from 'emoji-picker-react';
-
-import { get, post } from "../../utilities";
-
-import 'react-calendar/dist/Calendar.css';
+import React, { Component } from "react";
+import Select from 'react-select'
+import Card from "./Card.js";
 
 import "../../utilities.css";
-import 'rodal/lib/rodal.css';
-import "../App.css";
-import "./Overview.css";
 
 class Search extends Component {
   constructor(props) {
     super(props);
     // Initialize Default State
-    const curTime = new Date();
     this.state = {
-      userName: null,
-      moods: [],
-      journals: [],
+      selected: [],
     };
   }
 
@@ -28,14 +17,30 @@ class Search extends Component {
 
   }
 
+  handleChange = (selectedOption) => {
+    this.setState({ 
+      selected: selectedOption ? selectedOption.map(mood => mood.value) : [],
+    });
+  }
+
   render() {
-    let Categories = new Set();
-    for(let i = 0; i < this.props.moods.length; i++){
-      Categories.add(this.props.moods[i].category);
-    }
+    const options = this.props.moods.map((mood) => {
+      return {value: mood.name, label: mood.emoji + " " + mood.name};
+    });
+    let filteredJournals = this.props.journals;
+    for(let i = 0; i < this.state.selected.length; i++){
+      filteredJournals = filteredJournals.filter((journal) => {
+        return journal.moods.filter((mood) => mood.name === this.state.selected[i]).length !== 0
+      });
+    };
+    filteredJournals.sort((a, b) => a.year * 10000 + a.month * 100 + a.day - (b.year * 10000 + b.month * 100 + b.day));
+    let filteredJournalsDiv = filteredJournals.map((journal) => {
+      return <Card setDate={this.props.setDate} journal={journal}/>
+    });
     return (
       <>
-        {Categories}
+        <Select options={options} isMulti isClearable={true} onChange={this.handleChange}/>
+        <div>{filteredJournalsDiv}</div> 
       </>
     );
   }
