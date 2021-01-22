@@ -48,9 +48,9 @@ textarea
     border: 1px solid #EEEEEE;
     box-shadow: 1px 1px 0 #DDDDDD;
     margin: 2% auto;
-    font-size: 17px;
+    font-size: 1.3rem;
     resize: none;
-    height: 400px;
+    height: 30rem;
     width: calc(100vw - 450px);
      
     background-image: -webkit-linear-gradient(top , transparent, transparent 19px,#E7EFF8 0);
