@@ -61,6 +61,8 @@ class Manage extends Component {
   closeCreateRodal = () => {
     this.setState({
       createRodal: false,
+      name: "",
+      selectedEmoji: null,
     });
     document.getElementById("createForm").reset();
   }
@@ -68,13 +70,14 @@ class Manage extends Component {
   openEditRodal = () => {
     this.setState({
       editRodal: true,
-      selectedEmoji: null,
     });
   }
 
   closeEditRodal = () => {
     this.setState({
       editRodal: false,
+      name: "",
+      selectedEmoji: null,
     });
     document.getElementById("editForm").reset();
   }
@@ -186,24 +189,27 @@ class Manage extends Component {
         <div>loading...</div>
       )} 
       <Rodal height={480} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
-        <div>Create new mood</div>
+        <div className="u-rodalTitle">Create new mood</div>
         <form id="createForm">
           <label>
             Name:
             <input onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
-          <br/>
           <label>
             Emoji: {this.state.selectedEmoji ? this.state.selectedEmoji : "No Emoji Selected"}
-            <Picker onEmojiClick={this.onEmojiClick} />
+            <Picker preload onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
-          <input disabled={!this.state.selectedEmoji} type="button" onClick={this.handleCreateSubmit} value="Create mood" />
+          <input disabled={!this.state.selectedEmoji || this.state.moods.some((mood) => {
+              return mood.name === this.state.name}
+            )} type="button" onClick={this.handleCreateSubmit} value="Create mood" />
+          {this.state.moods.some((mood) => mood.name === this.state.name) &&
+          <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}
         </form>
       </Rodal>
       <Rodal height={480} visible={this.state.editRodal} onClose={this.closeEditRodal}>
-        <div>Edit mood</div>
+        <div className="u-rodalTitle">Edit mood</div>
         <form id="editForm">
           <label>
             Name:
@@ -212,11 +218,13 @@ class Manage extends Component {
           <br/>
           <label>
             Emoji: {this.state.selectedEmoji ? this.state.selectedEmoji : "No Emoji Selected"}
-            <Picker onEmojiClick={this.onEmojiClick} />
+            <Picker preload onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
           <input type="button" onClick={this.handleEditSubmit} value="Save mood" />
           <input type="button" onClick={this.handleDeleteSubmit} value="Delete mood" />
+          {this.state.moods.some((mood) => mood.name === this.state.name && mood.name !== this.state.selectedMood.name) &&
+          <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}
         </form>
       </Rodal>
       </>

@@ -12,7 +12,6 @@
 | - Sets up error handling in case something goes wrong when handling a request
 | - Actually starts the webserver
 */
-
 // validator runs some basic checks to make sure you've set everything up correctly
 // this is a tool provided by staff, so you don't need to worry about it
 const validator = require("./validator");
@@ -50,6 +49,15 @@ mongoose
 // create a new express server
 const app = express();
 app.use(validator.checkRoutes);
+
+if(process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    else
+      next()
+  })
+}
 
 // allow us to process POST requests
 app.use(express.json());
