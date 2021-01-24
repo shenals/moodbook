@@ -77,7 +77,6 @@ class Overview extends Component {
             </div>
             <div className="Overview-subContainer">
               <div className="u-title">Filter journals</div>
-              <br/>
               <Search moods={this.state.moods} journals={this.state.journals} setDate={this.props.setDate}/>
             </div>
           </div> 

@@ -3,7 +3,7 @@
     border-radius: 10%;
     box-shadow: none;
     margin-left: var(--s);
-    margin-top: var(--s);
+    margin-bottom: var(--s);
     font-family: 'Cabin', sans-serif;
 }
 

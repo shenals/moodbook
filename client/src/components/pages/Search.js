@@ -39,7 +39,7 @@ class Search extends Component {
     });
     return (
       <>
-        <Select options={options} isMulti isClearable={true} onChange={this.handleChange}/>
+        <Select placeholder="Search by mood(s)" options={options} isMulti isClearable={true} onChange={this.handleChange}/>
         <div>{filteredJournalsDiv}</div> 
       </>
     );

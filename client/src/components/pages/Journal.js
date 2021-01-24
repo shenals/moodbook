@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from 'react-date-picker';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import "../../utilities.css";
 import "./Journal.css";
@@ -17,6 +19,7 @@ class Journal extends Component {
       allMoods: [],
       disableTextArea: false,
       activeStartDate: curTime,
+      searchText: "",
       date: {
         dateObj: curTime,
         day: curTime.getDate(),
@@ -60,6 +63,11 @@ class Journal extends Component {
   }
 
   handleOnTextChange = (event) => {
+    const textarea = document.querySelector('textarea');
+    const initialHeight = 40;
+    textarea.style.height = `${initialHeight}px`;
+    const height = textarea.scrollHeight;
+    textarea.style.height = `${height + initialHeight}px`;
     this.setState(
       {text: event.target.value},
     );
@@ -72,6 +80,12 @@ class Journal extends Component {
       moods: this.state.moods,
     };
     post("/api/journal", body);
+  }
+
+  handleOnSearchChange = (event) => {
+    this.setState(
+      {searchText: event.target.value},
+    );
   }
 
   sendPostRequest = () => {
@@ -128,6 +142,11 @@ class Journal extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const textarea = document.querySelector('textarea');
+    const initialHeight = 40;
+    textarea.style.height = `${initialHeight}px`;
+    const height = textarea.scrollHeight;
+    textarea.style.height = `${height + initialHeight}px`;
     if (prevState.date !== this.state.date) {
       this.setState({
         disableTextArea: true,
@@ -160,7 +179,10 @@ class Journal extends Component {
     }
   }
 
+  
+
   render() {
+
     const months = [
       "January",
       "February",
@@ -178,14 +200,15 @@ class Journal extends Component {
     const moodList = this.state.moods.map((mood) => (
       <button key={mood.name} className="Journal-moodButton" onClick={() => this.handleClickCurMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
-    const allMoodList = this.state.allMoods.map((mood) => (
+    const allMoodList = this.state.allMoods.filter((mood) => mood.name.includes(this.state.searchText)).map((mood) => (
       <button key={mood.name} className="Journal-moodButton" onClick={() => this.handleClickAllMoods(mood)} disabled={this.handleDisableMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
     return (
       <>
         <div className="u-flex u-flex-wrap">
         <div className="Journal-subContainer">
-          <div>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</div>
+          <span>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</span>
+          <span>
           <DatePicker
           activeStartDate={this.state.activeStartDate}
           onActiveStartDateChange={({ activeStartDate, value, view }) => {
@@ -206,13 +229,18 @@ class Journal extends Component {
               }
             })
           }}/>
+          </span>
           <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
         </div>
         <div className="Journal-subContainer">
           <div>
-            <div>Moods</div>
+            <div className="u-smallTitle">Moods</div>
             <div>{moodList}</div>
-            <div>Add moods</div>
+            {this.state.moods.length === 0 && (<div>No moods added. Add some moods from below! 😁</div>)}
+            <hr/>
+            <div className="u-smallTitle">Add moods</div>
+            <FontAwesomeIcon icon={faSearch} />
+            <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
             <div>{allMoodList}</div>
           </div>
         </div>

@@ -2,6 +2,8 @@ import React, { Component, useState } from "react";
 import TopBar from "../TopBar.js";
 import Rodal from 'rodal';
 import Picker from 'emoji-picker-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import { get, post } from "../../utilities";
 
@@ -24,6 +26,7 @@ class Manage extends Component {
       editRodal: false,
       name: "",
       category: "",
+      searchText: "",
       selectedMood: null,
       selectedEmoji: null,
     };
@@ -165,8 +168,14 @@ class Manage extends Component {
     });
   }
 
+  handleOnSearchChange = (event) => {
+    this.setState(
+      {searchText: event.target.value},
+    );
+  }
+
   render() {
-    const moodList = this.state.moods.map((mood) => (
+    const moodList = this.state.moods.filter((mood) => mood.name.includes(this.state.searchText)).map((mood) => (
       <button key={mood.name} className="Overview-moodButton" onClick={() => this.handleClickMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
     return (
@@ -180,6 +189,8 @@ class Manage extends Component {
             </div>
             <div className="Overview-subContainer">
               <div className="u-title">Manage moods</div>
+              <FontAwesomeIcon icon={faSearch} />
+              <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
               <div>{moodList}</div>
               <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button>
             </div>
