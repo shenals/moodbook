@@ -79,6 +79,34 @@ tr:nth-child(even) {
   background-color: whitesmoke;
 }
 
+.u-redFlatButton {
+  border: 0.1em solid;
+  padding: 0.2em 0.5em;
+  box-shadow: none;
+  background-color: white;
+  border-color: rgb(199, 42, 42);
+  color: rgb(199, 42, 42);
+}
+
+.u-redFlatButton:hover {
+  background-color: rgb(199, 42, 42);
+  color: white;
+}
+
+.u-blackFlatButton {
+  border: 0.1em solid;
+  padding: 0.2em 0.5em;
+  box-shadow: none;
+  background-color: white;
+  border-color: lightgray;
+  color: black;
+}
+
+.u-blackFlatButton:hover {
+  background-color: lightgray;
+  color: black;
+}
+
 .u-flex {
   display: flex;
 }
@@ -135,6 +163,10 @@ tr:nth-child(even) {
 
 .u-margin-top {
   margin-top: 0.5em;
+}
+
+.u-hidden {
+  display: none;
 }
 
 .u-margin-right {

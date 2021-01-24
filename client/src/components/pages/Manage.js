@@ -203,7 +203,7 @@ class Manage extends Component {
           <div className="u-flex">
             <div className="Overview-subContainer">
               <div className="u-title">Account Settings</div>
-              <button onClick={this.downloadTxtFile}>Export data</button>
+              <button className="u-blackFlatButton" onClick={this.downloadTxtFile}>Export data</button>
             </div>
             <div className="Overview-subContainer">
               <div className="u-title">Manage moods</div>
@@ -232,7 +232,7 @@ class Manage extends Component {
           <br/>
           <input disabled={!this.state.selectedEmoji || this.state.moods.some((mood) => {
               return mood.name === this.state.name}
-            )} type="button" onClick={this.handleCreateSubmit} value="Create mood" />
+            )} className="u-blackFlatButton" type="button" onClick={this.handleCreateSubmit} value="Create mood" />
           {this.state.moods.some((mood) => mood.name === this.state.name) &&
           <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}
         </form>
@@ -250,8 +250,8 @@ class Manage extends Component {
             <Picker preload onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
-          <input type="button" className="u-margin-right" onClick={this.handleEditSubmit} value="Save mood" />
-          <input type="button" onClick={this.handleDeleteSubmit} value="Delete mood" />
+          <input type="button" className="u-blackFlatButton u-margin-right" onClick={this.handleEditSubmit} value="Save mood" />
+          <input type="button" className="u-redFlatButton" onClick={this.handleDeleteSubmit} value="Delete mood" />
           {this.state.moods.some((mood) => mood.name === this.state.name && mood.name !== this.state.selectedMood.name) &&
           <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}
         </form>

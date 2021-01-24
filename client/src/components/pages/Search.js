@@ -1,15 +1,25 @@
 import React, { Component } from "react";
 import Select from 'react-select'
 import Card from "./Card.js";
+import DatePicker from 'react-date-picker';
 
 import "../../utilities.css";
 
 class Search extends Component {
   constructor(props) {
     super(props);
+    const curTime = new Date();
     // Initialize Default State
     this.state = {
       selected: [],
+      monthFilter: false,
+      activeStartDate: curTime,
+      date: {
+        dateObj: curTime,
+        day: curTime.getDate(),
+        month: curTime.getMonth() + 1,
+        year: curTime.getFullYear(),
+      },
     };
   }
 
@@ -23,6 +33,12 @@ class Search extends Component {
     });
   }
 
+  handleFilterChange = (event) => {
+    this.setState({
+      monthFilter: event.target.checked,
+    });
+  }
+
   render() {
     const options = this.props.moods.map((mood) => {
       return {value: mood.name, label: mood.emoji + " " + mood.name};
@@ -33,13 +49,49 @@ class Search extends Component {
         return journal.moods.filter((mood) => mood.name === this.state.selected[i]).length !== 0
       });
     };
+    if(this.state.monthFilter){
+      filteredJournals = filteredJournals.filter((journal) => {
+        return journal.month === this.state.date.month && journal.year == this.state.date.year;
+      });
+    }
     filteredJournals.sort((a, b) => a.year * 10000 + a.month * 100 + a.day - (b.year * 10000 + b.month * 100 + b.day));
     let filteredJournalsDiv = filteredJournals.map((journal) => {
       return <Card setDate={this.props.setDate} journal={journal}/>
     });
     return (
       <>
-        <Select placeholder="Search by mood(s)" options={options} isMulti isClearable={true} onChange={this.handleChange}/>
+        <Select placeholder="Filter by mood(s)" options={options} isMulti isClearable={true} onChange={this.handleChange}/>
+        <div className="u-margin-top">
+        <span>
+        <input
+            name="monthFilter"
+            type="checkbox"
+            checked={this.state.monthFilter}
+            onChange={this.handleFilterChange} />
+        </span>
+        <span>Filter by month </span>
+        <DatePicker
+          activeStartDate={this.state.activeStartDate}
+          onActiveStartDateChange={({ activeStartDate, value, view }) => {
+            this.setState({
+              activeStartDate: activeStartDate,
+            })
+          }}
+          value={this.state.date.dateObj}
+          maxDetail="year"
+          clearIcon={null}
+          onChange={(value) => {
+            this.setState({
+              activeStartDate: value,
+              date: {
+                dateObj: value,
+                day: value.getDate(),
+                month: value.getMonth() + 1,
+                year: value.getFullYear(),
+              }
+            })
+          }}/>
+        </div>
         <div className="u-italic u-margin-top">{filteredJournalsDiv.length} journal entries found.</div>
         <div>{filteredJournalsDiv}</div> 
       </>

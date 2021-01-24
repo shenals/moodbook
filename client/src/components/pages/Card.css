@@ -16,6 +16,5 @@
 }
 
 .Card-emoji-null {
-    font-size: 14.7px;
-    color: whitesmoke;
+    color: rgba(245, 245, 245, 0);
 }

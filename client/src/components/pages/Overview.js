@@ -55,7 +55,7 @@ class Overview extends Component {
         }).length};
       }
     );
-    moodCount.sort( this.compareMoods );
+    moodCount.sort( this.compareMoods ).slice(0, 10);
     const moodDiv = moodCount.map((mood) => (
       <tr key={mood.mood.name}>
         <td>{mood.mood.emoji} {mood.mood.name}</td>
@@ -87,7 +87,7 @@ class Overview extends Component {
                 }, 0)}</span> total moods added</div>
               </div>
               <div className="Overview-stats">
-                <div className="u-bigText">Most common moods</div>
+                <div className="u-bigText">Your top 10 moods</div>
                 <br/>
                 <div>
                 <table>
@@ -102,7 +102,7 @@ class Overview extends Component {
               </div>
             </div>
             <div className="Overview-subContainer">
-              <div className="u-title">Filter journals</div>
+              <div className="u-title">Explore your journals</div>
               <Search moods={this.state.moods} journals={this.state.journals} setDate={this.props.setDate}/>
             </div>
           </div> 
