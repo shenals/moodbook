@@ -207,8 +207,8 @@ class Journal extends Component {
       <>
         <div className="u-flex u-flex-wrap">
         <div className="Journal-subContainer">
-          <span>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</span>
-          <span>
+          <div>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</div>
+          <div>
           <DatePicker
           activeStartDate={this.state.activeStartDate}
           onActiveStartDateChange={({ activeStartDate, value, view }) => {
@@ -229,7 +229,7 @@ class Journal extends Component {
               }
             })
           }}/>
-          </span>
+          </div>
           <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
         </div>
         <div className="Journal-subContainer">

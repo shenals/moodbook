@@ -66,10 +66,12 @@ form {
 
 input {
   font-family: 'Cabin', sans-serif;
+  font-size: 1em;
 }
 
 button {
   font-family: 'Cabin', sans-serif;
+  font-size: 1em;
 }
 
 table,td,th{
@@ -243,6 +245,7 @@ tr:nth-child(even) {
 .u-searchBar {
   border: 1px solid lightgray;
   height: 1.5em;
+  font-size: 1em;
   margin-left: 0.5em;
   margin-bottom: 0.5em;
   width: 50%;

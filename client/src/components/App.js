@@ -62,24 +62,12 @@ class App extends Component {
   handleLogout = () => {
     this.setState({ userId: undefined });
     post("/api/logout");
+    navigate("/");
   };
 
   render() {
-    return (
-      <>
-        <NavBar
-          handleLogin={this.handleLogin}
-          handleLogout={this.handleLogout}
-          userId={this.state.userId}
-        />
-        {this.state.userId ? (
-          <Router>
-            <Dashboard path="/" userName={this.state.userName} userId={this.state.userId} date={this.state.date} setDate={this.setDate}/>    
-            <Overview path="/overview" userId={this.state.userId} setDate={this.setDate}/>
-            <Manage path="/manage" userId={this.state.userId} />
-          </Router>
-        ) : (
-          <div className="u-centered">
+    const Home = () => (
+      <div className="u-centered">
             <div className="u-title">Welcome to Moodbook!</div>
             <div className="u-center">
               <div className="u-relative">
@@ -116,6 +104,26 @@ class App extends Component {
             />
             </div>
           </div>
+    );
+    return (
+      <>
+        <NavBar
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+          userId={this.state.userId}
+        />
+        {this.state.userId ? (
+          <Router>
+            <Dashboard path="/" userName={this.state.userName} userId={this.state.userId} date={this.state.date} setDate={this.setDate}/>    
+            <Overview path="/overview" userId={this.state.userId} setDate={this.setDate}/>
+            <Manage path="/manage" userId={this.state.userId} />
+            <NotFound default />
+          </Router>
+        ) : (
+          <Router>
+            <Home path="/" />
+            <NotFound default />
+          </Router>
         )}
       </>
     );

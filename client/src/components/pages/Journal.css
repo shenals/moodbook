@@ -5,6 +5,7 @@
     margin-left: var(--s);
     margin-bottom: var(--s);
     font-family: 'Cabin', sans-serif;
+    font-size: 1em;
 }
 
 .Journal-subContainer {

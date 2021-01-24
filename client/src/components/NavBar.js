@@ -17,9 +17,6 @@ class NavBar extends Component {
   }
 
   render() {
-    if(!this.props.userId){
-      navigate("/");
-    }
     return (
       <nav className="NavBar-container">
         <div className="NavBar-title u-inlineBlock">Moodbook</div>
