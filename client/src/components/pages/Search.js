@@ -40,6 +40,7 @@ class Search extends Component {
     return (
       <>
         <Select placeholder="Search by mood(s)" options={options} isMulti isClearable={true} onChange={this.handleChange}/>
+        <div className="u-italic u-margin-top">{filteredJournalsDiv.length} journal entries found.</div>
         <div>{filteredJournalsDiv}</div> 
       </>
     );

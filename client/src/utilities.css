@@ -66,6 +66,15 @@ input {
   font-family: 'Cabin', sans-serif;
 }
 
+table,td,th{
+  text-align: center;
+  border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+  background-color: whitesmoke;
+}
+
 .u-flex {
   display: flex;
 }
@@ -114,6 +123,14 @@ input {
 
 .u-pointer {
   cursor: pointer;
+}
+
+.u-italic {
+  font-style: italic;
+}
+
+.u-margin-top {
+  margin-top: 0.5em;
 }
 
 .u-link {
@@ -178,4 +195,11 @@ input {
   margin-left: 0.5em;
   margin-bottom: 0.5em;
   width: 50%;
+}
+
+.u-formText {
+  border: 1px solid lightgray;
+  height: 1.5em;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
 }

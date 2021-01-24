@@ -204,7 +204,7 @@ class Manage extends Component {
         <form id="createForm">
           <label>
             Name:
-            <input onChange={this.handleOnNameChange} type="text"/>
+            <input className="u-formText" onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
           <label>
@@ -224,7 +224,7 @@ class Manage extends Component {
         <form id="editForm">
           <label>
             Name:
-            <input value={this.state.name} onChange={this.handleOnNameChange} type="text"/>
+            <input className="u-formText" value={this.state.name} onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
           <label>

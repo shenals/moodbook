@@ -57,9 +57,10 @@ class Overview extends Component {
     );
     moodCount.sort( this.compareMoods );
     const moodDiv = moodCount.map((mood) => (
-      <div key={mood.mood.name}>
-        <span>{mood.mood.emoji} {mood.mood.name} {mood.count}</span>
-      </div>
+      <tr key={mood.mood.name}>
+        <td>{mood.mood.emoji} {mood.mood.name}</td>
+        <td>{mood.count}</td>
+      </tr>
     ));
     return (
       <>
@@ -71,8 +72,24 @@ class Overview extends Component {
               <div className="u-title">Quick stats</div>
               <div>Total journal entries: {this.state.journals.length}</div>
               <br/>
+              <div>Total characters: {this.state.journals.reduce((a, b) => {
+                 return b.text ? a + b.text.length : a
+              }, 0)}</div>
+              <br/>
+              <div>Total words: {this.state.journals.reduce((a, b) => {
+                 return b.text ? a + b.text.replace(/[^_0-9a-zA-Z]/g, " ").trim().split(/\s+/).length : a
+              }, 0)}</div>
+              <br/>
               <div>Most common moods:</div>
-              <div>{moodDiv}</div>
+              <div>
+              <table>
+                <tr>
+                  <th>Mood</th>
+                  <th>Frequency</th>
+                </tr>
+                {moodDiv}
+              </table>
+              </div>
               <br/>
             </div>
             <div className="Overview-subContainer">
