@@ -21,7 +21,9 @@ class Manage extends Component {
     const curTime = new Date();
     this.state = {
       userName: null,
+      user: null,
       moods: [],
+      journals: [],
       createRodal: false,
       editRodal: false,
       name: "",
@@ -35,8 +37,14 @@ class Manage extends Component {
   componentDidMount() {
     get("/api/users", {_id: this.props.userId}).then((user) => {
       this.setState({
+        user: user,
         userName: user.name,
         moods: user.moods,
+      });
+    });
+    get("/api/journal", {owner: this.props.userId}).then((journals) => {
+      this.setState({
+        journals: journals,
       });
     });
   }
@@ -174,6 +182,15 @@ class Manage extends Component {
     );
   }
 
+  downloadTxtFile = () => {
+    const element = document.createElement("a");
+    const file = new Blob([JSON.stringify({user: this.state.user, journals: this.state.journals})]);
+    element.href = URL.createObjectURL(file);
+    element.download = "moodbook_export.json";
+    document.body.appendChild(element);
+    element.click();
+  }
+
   render() {
     const moodList = this.state.moods.filter((mood) => mood.name.includes(this.state.searchText)).map((mood) => (
       <button key={mood.name} className="Overview-moodButton" onClick={() => this.handleClickMood(mood)}> {mood.emoji} {mood.name} </button>
@@ -186,6 +203,7 @@ class Manage extends Component {
           <div className="u-flex">
             <div className="Overview-subContainer">
               <div className="u-title">Account Settings</div>
+              <button onClick={this.downloadTxtFile}>Export data</button>
             </div>
             <div className="Overview-subContainer">
               <div className="u-title">Manage moods</div>
@@ -232,7 +250,7 @@ class Manage extends Component {
             <Picker preload onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
-          <input type="button" onClick={this.handleEditSubmit} value="Save mood" />
+          <input type="button" className="u-margin-right" onClick={this.handleEditSubmit} value="Save mood" />
           <input type="button" onClick={this.handleDeleteSubmit} value="Delete mood" />
           {this.state.moods.some((mood) => mood.name === this.state.name && mood.name !== this.state.selectedMood.name) &&
           <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}

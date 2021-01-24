@@ -66,6 +66,10 @@ input {
   font-family: 'Cabin', sans-serif;
 }
 
+button {
+  font-family: 'Cabin', sans-serif;
+}
+
 table,td,th{
   text-align: center;
   border-collapse: collapse;
@@ -133,6 +137,10 @@ tr:nth-child(even) {
   margin-top: 0.5em;
 }
 
+.u-margin-right {
+  margin-right: 0.5em;
+}
+
 .u-link {
   color: var(--primary);
   text-decoration: none;
@@ -166,6 +174,10 @@ tr:nth-child(even) {
   font-size: 1.1em;
   font-weight: 600;
   margin-bottom: 0.5rem;
+}
+
+.u-bigText {
+  font-size: 20px;
 }
 
 .u-rodalTitle {

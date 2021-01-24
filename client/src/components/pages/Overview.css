@@ -13,6 +13,10 @@
     margin-top: var(--m);
 }
 
+.Overview-stats {
+    flex-grow: 1;
+}
+
 @media screen and (max-width: 800px){
     .Overview-subContainer {
         width: calc(100vw - 2 * var(--l));

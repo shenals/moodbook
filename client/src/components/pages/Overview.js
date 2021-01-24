@@ -70,27 +70,36 @@ class Overview extends Component {
           <div className="u-flex">
             <div className="Overview-subContainer">
               <div className="u-title">Quick stats</div>
-              <div>Total journal entries: {this.state.journals.length}</div>
-              <br/>
-              <div>Total characters: {this.state.journals.reduce((a, b) => {
-                 return b.text ? a + b.text.length : a
-              }, 0)}</div>
-              <br/>
-              <div>Total words: {this.state.journals.reduce((a, b) => {
-                 return b.text ? a + b.text.replace(/[^_0-9a-zA-Z]/g, " ").trim().split(/\s+/).length : a
-              }, 0)}</div>
-              <br/>
-              <div>Most common moods:</div>
-              <div>
-              <table>
-                <tr>
-                  <th>Mood</th>
-                  <th>Frequency</th>
-                </tr>
-                {moodDiv}
-              </table>
+              <div className="u-flex">
+              <div className="Overview-stats">
+                <div><span className="u-bigText">{this.state.journals.length}</span> total journal entries</div>
+                <br/>
+                <div><span className="u-bigText">{this.state.journals.reduce((a, b) => {
+                  return b.text ? a + b.text.replace(/[^_0-9a-zA-Z]/g, " ").trim().split(/\s+/).length : a
+                }, 0)}</span> total words</div>
+                <br/>
+                <div><span className="u-bigText">{this.state.journals.reduce((a, b) => {
+                  return b.text ? a + b.text.length : a
+                }, 0)}</span> total characters</div>
+                <br/>
+                <div><span className="u-bigText">{moodCount.reduce((a, b) => {
+                  return a + b.count;
+                }, 0)}</span> total moods added</div>
               </div>
-              <br/>
+              <div className="Overview-stats">
+                <div className="u-bigText">Most common moods</div>
+                <br/>
+                <div>
+                <table>
+                  <tr>
+                    <th>Mood</th>
+                    <th>Frequency</th>
+                  </tr>
+                  {moodDiv}
+                </table>
+                </div>
+              </div>
+              </div>
             </div>
             <div className="Overview-subContainer">
               <div className="u-title">Filter journals</div>
