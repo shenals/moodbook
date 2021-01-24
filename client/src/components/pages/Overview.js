@@ -70,7 +70,7 @@ class Overview extends Component {
           <div className="u-flex">
             <div className="Overview-subContainer">
               <div className="u-title">Quick stats</div>
-              <div className="u-flex">
+              <div className="u-flexRow">
               <div className="Overview-stats">
                 <div><span className="u-bigText">{this.state.journals.length}</span> total journal entries</div>
                 <br/>

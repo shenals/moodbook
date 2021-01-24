@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Router, navigate } from "@reach/router";
+import moodbook from "./moodbook.png";
 import NotFound from "./pages/NotFound.js";
 import Dashboard from "./pages/Dashboard.js";
 import Overview from "./pages/Overview.js";
@@ -81,10 +82,30 @@ class App extends Component {
           <div className="u-centered">
             <div className="u-title">Welcome to Moodbook!</div>
             <div className="u-center">
+              <div className="u-relative">
+                <img className="App-book" src={moodbook}/>
+                <div className="App-book">
+                  <div className="App-bookEmoji App-bookEmoji1">😄</div>
+                  <div className="App-bookEmoji App-bookEmoji2">😞</div>
+                  <div className="App-bookEmoji App-bookEmoji3">🏖️</div>
+                  <div className="App-bookEmoji App-bookEmoji4">😵</div>
+                  <div className="App-bookEmoji App-bookEmoji5">🎂</div>
+                  <div className="App-bookEmoji App-bookEmoji6">🥱</div>
+                  <div className="App-bookEmoji App-bookEmoji7">️‍🔥</div>
+                  <div className="App-bookEmoji App-bookEmoji8">✨</div>
+                  <div className="App-bookEmoji App-bookEmoji9">🥰</div>
+                  <div className="App-bookEmoji App-bookEmoji10">🤩</div>
+                  <div className="App-bookEmoji App-bookEmoji11">🥺</div>
+                  <div className="App-bookEmoji App-bookEmoji12">🍔</div>
+                  <div className="App-bookEmoji App-bookEmoji13">💕</div>
+                  <div className="App-bookEmoji App-bookEmoji14">🎊</div>
+                  <div className="App-bookEmoji App-bookEmoji15">😭</div>
+                </div>
+              </div>
               <div>
                 <br/>
-                Moodbook is a daily personal journal that doubles up
-                as a mood tracker.
+                Moodbook is a daily personal journal<br/>
+                that doubles up as a mood tracker.
               </div>
               <br/>             
               <GoogleLogin
