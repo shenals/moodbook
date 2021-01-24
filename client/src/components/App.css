@@ -7,9 +7,19 @@
     animation-duration: calc(var(--anim) * 15);
     animation-name: fadeout;
     animation-iteration-count: infinite;
-    opacity: 0;
+    opacity: 1;
     position: absolute;
 }
+
+@media screen and (min-width: 1000px){
+    .App-book {
+        width: 40vw;
+    }
+
+    .App-bookEmoji {
+        font-size: 3.2vw;
+    }
+  }
 
 .App-bookEmoji1 {
     animation-delay: calc(var(--anim) * 1);
@@ -38,7 +48,7 @@
 .App-bookEmoji5 {
     animation-delay: calc(var(--anim) * 5);
     top: 28%;
-    right: 15%;
+    right: 6%;
 }
 
 .App-bookEmoji6 {
@@ -80,7 +90,7 @@
 .App-bookEmoji12 {
     animation-delay: calc(var(--anim) * 12);
     top: 45%;
-    right: 24%;
+    right: 21%;
 }
 
 .App-bookEmoji13 {
@@ -106,15 +116,19 @@
         opacity: 1;
     }
 
-    90% {
-        opacity: 1; 
-    }
-
-    92% {
+    2% {
         opacity: 0; 
     }
 
+    10% {
+        opacity: 0; 
+    }
+
+    10% {
+        opacity: 1;
+    }
+
     to {
-        opacity: 0;
+        opacity: 1;
     }
   }

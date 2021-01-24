@@ -111,6 +111,11 @@ tr:nth-child(even) {
   color: black;
 }
 
+.u-blackFlatButton:disabled {
+  background-color: white;
+  color: lightgray;
+}
+
 .u-flex {
   display: flex;
 }

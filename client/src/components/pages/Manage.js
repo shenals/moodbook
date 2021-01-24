@@ -75,7 +75,8 @@ class Manage extends Component {
       name: "",
       selectedEmoji: null,
     });
-    document.getElementById("createForm").reset();
+    const nameField = document.getElementById("createFormName");
+    nameField.value = nameField.defaultValue;
   }
 
   openEditRodal = () => {
@@ -90,7 +91,8 @@ class Manage extends Component {
       name: "",
       selectedEmoji: null,
     });
-    document.getElementById("editForm").reset();
+    const nameField = document.getElementById("editFormName");
+    nameField.value = nameField.defaultValue;
   }
 
   handleCreateSubmit = () => {
@@ -102,11 +104,15 @@ class Manage extends Component {
     this.setState({
       createRodal: false,
       moods: [...this.state.moods, newMood],
+      name: "",
+      selectedEmoji: null,
     });
     const body = {
       _id: this.props.userId,
       moods: [...this.state.moods, newMood],
     };
+    const nameField = document.getElementById("createFormName");
+    nameField.value = nameField.defaultValue;
     post("/api/users", body);
   }
 
@@ -121,6 +127,8 @@ class Manage extends Component {
     this.setState({
       editRodal: false,
       moods: newMoods,
+      name: "",
+      selectedEmoji: null,
     });
     const body = {
       _id: this.props.userId,
@@ -130,6 +138,8 @@ class Manage extends Component {
       category: this.state.category,
     };
     //alert(JSON.stringify(body));
+    const nameField = document.getElementById("editFormName");
+    nameField.value = nameField.defaultValue;
     post("/api/moods/edit", body);
     post("/api/users", {_id: this.props.userId, moods: newMoods});
   }
@@ -139,11 +149,15 @@ class Manage extends Component {
     this.setState({
       editRodal: false,
       moods: newMoods,
+      name: "",
+      selectedEmoji: null,
     });
     const body = {
       _id: this.props.userId,
       moodName: this.state.selectedMood.name,
     };
+    const nameField = document.getElementById("editFormName");
+    nameField.value = nameField.defaultValue;
     post("/api/moods/delete", body);
     post("/api/users", {_id: this.props.userId, moods: newMoods});
   }
@@ -217,12 +231,12 @@ class Manage extends Component {
       ) : (
         <div>loading...</div>
       )} 
-      <Rodal height={480} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
+      <Rodal height={485} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
         <div className="u-rodalTitle">Create new mood</div>
         <form id="createForm">
           <label>
             Name:
-            <input className="u-formText" onChange={this.handleOnNameChange} type="text"/>
+            <input id="createFormName" className="u-formText" onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
           <label>
@@ -230,19 +244,22 @@ class Manage extends Component {
             <Picker preload onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
-          <input disabled={!this.state.selectedEmoji || this.state.moods.some((mood) => {
+          <input disabled={!this.state.selectedEmoji || !this.state.name || this.state.moods.some((mood) => {
               return mood.name === this.state.name}
             )} className="u-blackFlatButton" type="button" onClick={this.handleCreateSubmit} value="Create mood" />
           {this.state.moods.some((mood) => mood.name === this.state.name) &&
           <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}
+          {!this.state.selectedEmoji && !this.state.name && <div className="u-red">Please select a name and an emoji for the new mood.</div>}
+          {this.state.selectedEmoji && !this.state.name && <div className="u-red">Please select a name for the new mood.</div>}
+          {!this.state.selectedEmoji && this.state.name && <div className="u-red">Please select an emoji for the new mood.</div>}
         </form>
       </Rodal>
-      <Rodal height={480} visible={this.state.editRodal} onClose={this.closeEditRodal}>
+      <Rodal height={485} visible={this.state.editRodal} onClose={this.closeEditRodal}>
         <div className="u-rodalTitle">Edit mood</div>
         <form id="editForm">
           <label>
             Name:
-            <input className="u-formText" value={this.state.name} onChange={this.handleOnNameChange} type="text"/>
+            <input id="editFormName" className="u-formText" value={this.state.name} onChange={this.handleOnNameChange} type="text"/>
           </label>
           <br/>
           <label>
@@ -252,7 +269,7 @@ class Manage extends Component {
           <br/>
           <input type="button" className="u-blackFlatButton u-margin-right" onClick={this.handleEditSubmit} value="Save mood" />
           <input type="button" className="u-redFlatButton" onClick={this.handleDeleteSubmit} value="Delete mood" />
-          {this.state.moods.some((mood) => mood.name === this.state.name && mood.name !== this.state.selectedMood.name) &&
+          {this.state.moods.some((mood) => mood && mood.name === this.state.name && mood.name !== this.state.selectedMood.name) &&
           <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}
         </form>
       </Rodal>
