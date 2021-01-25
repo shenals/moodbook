@@ -71,6 +71,11 @@ router.post("/moods/edit", (req, res) => {
   }).then((journal) => res.send(journal));
 });
 
+router.post("/moods/merge", (req, res) => {
+  Journal.updateMany({owner: req.body._id, "moods.name": req.body.name }, { $pull: { moods: { name: req.body.prevName } } })
+  .then((journal) => res.send(journal));
+});
+
 router.post("/users/delete", (req, res) => {
   User.deleteOne(req.body).then((user) => res.send(user));
 });

@@ -30,6 +30,7 @@ class Manage extends Component {
       savingText: "",
       createRodal: false,
       editRodal: false,
+      mergeRodal: false,
       name: "",
       searchText: "",
       selectedMood: null,
@@ -127,6 +128,18 @@ class Manage extends Component {
     nameField.value = nameField.defaultValue;
   }
 
+  openMergeRodal = () => {
+    this.setState({
+      mergeRodal: true,
+    });
+  }
+
+  closeMergeRodal = () => {
+    this.setState({
+      mergeRodal: false,
+    });
+  }
+
   handleDeleteJournals = () => {
     const body = {
       owner: this.props.userId,
@@ -209,7 +222,7 @@ class Manage extends Component {
     post("/api/users", {_id: this.props.userId, moods: newMoods});
   }
 
-  handleMergeSubmit = () => {
+  handleMergeSubmit = async() => {
     const newMoods = this.state.moods.filter((mood) => mood.name !== this.state.mood1.value.name);
     const body = {
       _id: this.props.userId,
@@ -227,6 +240,8 @@ class Manage extends Component {
       mood1: null,
       mood2: null,
     });
+    this.closeMergeRodal();
+    await post("/api/moods/merge", body);
     post("/api/moods/edit", body);
     post("/api/moods/delete", body2);
     post("/api/users", {_id: this.props.userId, moods: newMoods});
@@ -327,15 +342,34 @@ class Manage extends Component {
               <div>
                 Merge
               <div className="Manage-mergeSelect u-margin-left u-margin-right">
-              <Select placeholder="Mood 1" value={this.state.mood1} options={options} isClearable={true} onChange={this.handleMood1Change}/>
+              <Select placeholder="Mood 1" maxMenuHeight={200} value={this.state.mood1} options={options.filter((option) => !this.state.mood2 || option.value.name !== this.state.mood2.value.name)} isClearable={true} onChange={this.handleMood1Change}/>
               </div>
-               with
+               into
               <div className="Manage-mergeSelect u-margin-left">
-              <Select placeholder="Mood 2" value={this.state.mood2} options={options.filter((option) => !this.state.mood1 || option.value.name !== this.state.mood1.value.name)} isClearable={true} onChange={this.handleMood2Change}/>
+              <Select placeholder="Mood 2" maxMenuHeight={200} value={this.state.mood2} options={options.filter((option) => !this.state.mood1 || option.value.name !== this.state.mood1.value.name)} isClearable={true} onChange={this.handleMood2Change}/>
               </div>
               <div>
-              <button className="u-blackFlatButton u-margin-top u-margin-bottom" onClick={this.handleMergeSubmit}>Merge moods</button>
+              <button className="u-blackFlatButton u-margin-bottom u-margin-top" disabled={!this.state.mood1 || !this.state.mood2} onClick={this.openMergeRodal}>Merge moods</button>
               </div>
+              <Rodal height={190} width={500} visible={this.state.mergeRodal} onClose={this.closeMergeRodal}>
+                <div className="u-rodalTitle">Merge moods</div>
+                {this.state.mood1 && this.state.mood2 &&
+                <div>Are you sure you want to merge
+                <span><button className="Overview-moodButton-noMargin" onClick={() => {}}> {this.state.mood1.value.emoji} {this.state.mood1.value.name} </button></span>
+                into
+                <span><button className="Overview-moodButton-noMargin" onClick={() => {}}> {this.state.mood2.value.emoji} {this.state.mood2.value.name} </button></span> 
+                ? <br/>
+                All instances of
+                <span><button className="Overview-moodButton-noMargin" onClick={() => {}}> {this.state.mood1.value.emoji} {this.state.mood1.value.name} </button></span>
+                will be converted into
+                <span><button className="Overview-moodButton-noMargin" onClick={() => {}}> {this.state.mood2.value.emoji} {this.state.mood2.value.name} </button></span> 
+                and
+                <span><button className="Overview-moodButton-noMargin" onClick={() => {}}> {this.state.mood1.value.emoji} {this.state.mood1.value.name} </button></span>
+                will be removed from your mood collection.
+                This action cannot be undone.
+                </div>}
+                <button className="u-blackFlatButton u-margin-top u-margin-bottom" onClick={this.handleMergeSubmit}>Merge moods</button>
+              </Rodal>
               </div>
             </div>
             <div className="Manage-subContainer">
