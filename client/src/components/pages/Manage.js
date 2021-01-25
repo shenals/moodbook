@@ -274,6 +274,13 @@ class Manage extends Component {
       {this.state.moods.length !== 0 ? (
         <>
           <div className="u-flex">
+          <div className="Manage-subContainer">
+              <div className="u-title">Manage moods</div>
+              <FontAwesomeIcon icon={faSearch} />
+              <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
+              <div>{moodList}</div>
+              <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button>
+            </div>
             <div className="Manage-subContainer">
               <div className="u-title">Manage Account</div>
               <div className="u-smallTitle">Account Settings</div>
@@ -308,13 +315,6 @@ class Manage extends Component {
                 <div>Are you sure you want to delete your user account? This action cannot be undone. You will be logged out of your account.</div>
                 <input type="button"  className="u-redFlatButton u-margin-top u-margin-bottom" onClick={this.handleDeleteAccount} value="Delete account" />
               </Rodal>
-            </div>
-            <div className="Manage-subContainer">
-              <div className="u-title">Manage moods</div>
-              <FontAwesomeIcon icon={faSearch} />
-              <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
-              <div>{moodList}</div>
-              <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button>
             </div>
           </div>
         </>
