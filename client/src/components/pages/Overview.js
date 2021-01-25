@@ -69,6 +69,10 @@ class Overview extends Component {
       {this.state.journals.length !== 0 ? (
         <>
           <div className="u-flex">
+          <div className="Overview-subContainer Overview-explore">
+              <div className="u-title">Explore your journals</div>
+              <Search moods={this.state.moods} journals={this.state.journals} setDate={this.props.setDate}/>
+            </div>
             <div className="Overview-subContainer Overview-quickstats">
               <div className="u-title">Quick stats</div>
               <div className="u-flexRow">
@@ -101,10 +105,6 @@ class Overview extends Component {
                 </div>
               </div>
               </div>
-            </div>
-            <div className="Overview-subContainer Overview-explore">
-              <div className="u-title">Explore your journals</div>
-              <Search moods={this.state.moods} journals={this.state.journals} setDate={this.props.setDate}/>
             </div>
           </div> 
         </>

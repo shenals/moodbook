@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import Select from 'react-select'
 import Card from "./Card.js";
 import DatePicker from 'react-date-picker';
+import ReactPaginate from 'react-paginate';
 
 import "../../utilities.css";
+import "./pagination.css";
 
 class Search extends Component {
   constructor(props) {
@@ -15,6 +17,8 @@ class Search extends Component {
       monthFilter: false,
       activeStartDate: curTime,
       dateView: "year",
+      selectedPage: 0,
+      journalsPerPage: 25,
       date: {
         dateObj: curTime,
         day: curTime.getDate(),
@@ -22,7 +26,7 @@ class Search extends Component {
         year: curTime.getFullYear(),
       },
     };
-  }
+  } 
 
   componentDidMount() {
 
@@ -43,6 +47,16 @@ class Search extends Component {
   handleDateViewChange = (event) => {
     this.setState({dateView: event.target.value});
   }
+
+  handleCountChange = (event) => {
+    this.setState({journalsPerPage: event.target.value});
+  }
+
+  handlePageClick = (data) => {
+    this.setState({
+      selectedPage: data.selected,
+    });
+  };
 
   render() {
     const options = this.props.moods.map((mood) => {
@@ -65,7 +79,8 @@ class Search extends Component {
       });
     }
     filteredJournals.sort((a, b) => a.year * 10000 + a.month * 100 + a.day - (b.year * 10000 + b.month * 100 + b.day));
-    let filteredJournalsDiv = filteredJournals.map((journal) => {
+    let paginatedJournals = filteredJournals.slice(this.state.selectedPage * this.state.journalsPerPage, (this.state.selectedPage + 1) * this.state.journalsPerPage);
+    let filteredJournalsDiv = paginatedJournals.map((journal) => {
       return <Card setDate={this.props.setDate} journal={journal}/>
     });
     return (
@@ -109,7 +124,39 @@ class Search extends Component {
             })
           }}/>
         </div>
-        <div className="u-italic u-margin-top">{filteredJournalsDiv.length} journal {filteredJournalsDiv.length === 1 ? "entry" : "entries"} found.</div>
+        <div className="u-italic u-margin-top u-margin-bottom">
+          {filteredJournals.length} journals {filteredJournals.length === 1 ? "entry" : "entries"} found.
+          {this.state.selectedPage * this.state.journalsPerPage + 1 === Math.min(filteredJournals.length, (this.state.selectedPage + 1) * this.state.journalsPerPage) ? 
+          (<span> Showing entry {this.state.selectedPage * this.state.journalsPerPage + 1}.</span>)
+           : 
+          (<span> Showing entries {this.state.selectedPage * this.state.journalsPerPage + 1} - {Math.min(filteredJournals.length, (this.state.selectedPage + 1) * this.state.journalsPerPage)}.</span>)
+          }
+        </div>
+        <div>
+          <span>
+            Results per page: 
+          </span>
+          <select value={this.state.journalsPerPage} onChange={this.handleCountChange}>
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+        {filteredJournals.length > this.state.journalsPerPage &&
+        <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={Math.ceil(filteredJournals.length / this.state.journalsPerPage)}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />}
         <div>{filteredJournalsDiv}</div> 
       </>
     );

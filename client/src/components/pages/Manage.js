@@ -13,6 +13,7 @@ import "../../utilities.css";
 import 'rodal/lib/rodal.css';
 import "../App.css";
 import "./Overview.css";
+import "./Manage.css";
 
 class Manage extends Component {
   constructor(props) {
@@ -215,11 +216,11 @@ class Manage extends Component {
       {this.state.moods.length !== 0 ? (
         <>
           <div className="u-flex">
-            <div className="Overview-subContainer">
+            <div className="Manage-subContainer">
               <div className="u-title">Account Settings</div>
               <button className="u-blackFlatButton" onClick={this.downloadTxtFile}>Export data</button>
             </div>
-            <div className="Overview-subContainer">
+            <div className="Manage-subContainer">
               <div className="u-title">Manage moods</div>
               <FontAwesomeIcon icon={faSearch} />
               <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />

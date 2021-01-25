@@ -19,6 +19,12 @@
   text-decoration: none;
 }
 
+.NavBar-title,
+.NavBar-title:visited {
+  color: var(--white);
+  text-decoration: none;
+}
+
 .NavBar-link:hover {
   opacity: 0.8;
 }

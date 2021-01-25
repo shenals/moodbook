@@ -1,0 +1,12 @@
+.Manage-subContainer {
+    width: 45vw;
+    margin-left: var(--l);
+    margin-top: var(--m);
+}
+
+@media screen and (max-width: 1000px){
+    .Manage-subContainer {
+        width: calc(100vw - 2 * var(--l));
+        margin-right: var(--l);
+    }
+  }

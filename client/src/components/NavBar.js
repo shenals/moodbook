@@ -19,7 +19,9 @@ class NavBar extends Component {
   render() {
     return (
       <nav className="NavBar-container">
-        <div className="NavBar-title u-inlineBlock">Moodbook</div>
+        <Link to="/" className="NavBar-title u-inlineBlock">
+          Moodbook
+        </Link>
         <div className="NavBar-linkContainer u-inlineBlock">
           {this.props.userId && (
             <>
