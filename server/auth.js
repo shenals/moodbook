@@ -26,31 +26,27 @@ function getOrCreateUser(user) {
     const newUser = new User({
       name: user.name,
       googleid: user.sub,
+      bgColor: "black",
       moods: [
         {
           name: "happy",
           emoji: "😄",
-          category: "emotion",
         },
         {
           name: "sad",
           emoji: "😞",
-          category: "emotion",
         },
         {
           name: "excited",
           emoji: "🤩",
-          category: "emotion",
         },
         {
           name: "hosed",
           emoji: "😵",
-          category: "emotion",
         },
         {
           name: "bored",
           emoji: "🥱",
-          category: "emotion",
         },
       ],
     });

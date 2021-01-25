@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 
+import { get } from "../utilities";
+
 import "../utilities.css";
 import "./NavBar.css";
 
@@ -14,11 +16,30 @@ const GOOGLE_CLIENT_ID = "616012024531-v5eduh9f5cm3lata519730qdr1baeegc.apps.goo
 class NavBar extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      bgColor: null,
+    };
+  }
+
+  componentWillUpdate(){
+    if(!this.props.userId && this.state.bgColor){
+      this.setState({
+        bgColor: null,
+      });
+    }
+    if(this.props.userId){
+      get("/api/users", {_id: this.props.userId}).then((user) => {
+        this.setState({
+          bgColor: user.bgColor,
+        });
+      });
+    }
   }
 
   render() {
     return (
-      <nav className="NavBar-container">
+      <nav className="NavBar-container" style={this.state.bgColor ? {backgroundColor: this.state.bgColor} : {display: "none"}}>
         <Link to="/" className="NavBar-title u-inlineBlock">
           Moodbook
         </Link>

@@ -29,6 +29,7 @@ class Manage extends Component {
       savingText: "",
       createRodal: false,
       editRodal: false,
+      bgColor: null,
       name: "",
       searchText: "",
       selectedMood: null,
@@ -45,6 +46,7 @@ class Manage extends Component {
         userName: user.name,
         nameText: user.name,
         moods: user.moods,
+        bgColor: user.bgColor,
       });
     });
     get("/api/journal", {owner: this.props.userId}).then((journals) => {
@@ -214,6 +216,7 @@ class Manage extends Component {
     const body = {
       _id: this.props.userId,
       name: this.state.nameText,
+      bgColor: this.state.bgColor,
     };
     post("/api/users", body).then(
       this.setState({
@@ -255,6 +258,12 @@ class Manage extends Component {
     );
   }
 
+  handleColorDropdownChange = (event) => {
+    this.setState(
+      {bgColor: event.target.value},
+    );
+  }
+
   downloadTxtFile = () => {
     const element = document.createElement("a");
     const file = new Blob([JSON.stringify({user: this.state.user, journals: this.state.journals})]);
@@ -274,12 +283,30 @@ class Manage extends Component {
       {this.state.moods.length !== 0 ? (
         <>
           <div className="u-flex">
+          <div className="Manage-subContainer">
+              <div className="u-title">Manage moods</div>
+              <FontAwesomeIcon icon={faSearch} />
+              <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
+              <div>{moodList}</div>
+              <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button>
+            </div>
             <div className="Manage-subContainer">
               <div className="u-title">Manage Account</div>
               <div className="u-smallTitle">Account Settings</div>
               <div>
                 <span>Name: </span>
                 <input className="u-formText" value={this.state.nameText} onChange={this.handleNameTextChange} type="text"/>
+              </div>
+              <div className="u-margin-bottom">
+                <span>Color: </span>
+                <span className="u-margin-left">
+                <select value={this.state.bgColor} onChange={this.handleColorDropdownChange}>
+                  <option value="black">
+                    black
+                  </option>
+                  <option value="blue">blue</option>
+                </select>
+                </span>
               </div>
               <div className="u-margin-bottom">
                 <button className="u-blackFlatButton" onClick={this.handleSaveSettings}>Save settings</button>
@@ -308,13 +335,6 @@ class Manage extends Component {
                 <div>Are you sure you want to delete your user account? This action cannot be undone. You will be logged out of your account.</div>
                 <input type="button"  className="u-redFlatButton u-margin-top u-margin-bottom" onClick={this.handleDeleteAccount} value="Delete account" />
               </Rodal>
-            </div>
-            <div className="Manage-subContainer">
-              <div className="u-title">Manage moods</div>
-              <FontAwesomeIcon icon={faSearch} />
-              <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
-              <div>{moodList}</div>
-              <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button>
             </div>
           </div>
         </>

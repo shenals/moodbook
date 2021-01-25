@@ -32,6 +32,7 @@ class App extends Component {
       date: null,
       month: null,
       year: null,
+      bgColor: null,
     };
   }
 
@@ -54,7 +55,7 @@ class App extends Component {
     console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
-      this.setState({ userId: user._id, userName: user.name });
+      this.setState({ userId: user._id, userName: user.name, bgColor: user.bgColor });
       post("/api/initsocket", { socketid: socket.id });
     });
   };
