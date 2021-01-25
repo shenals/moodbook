@@ -1,12 +1,8 @@
-# Project Skeleton
+# Moodbook
 
-## What we provide
+## About Moodbook
 
-- Google Auth (Skeleton.js & auth.js)
-  - Disclaimer: Auth isn't being taught until the second week.
-- Socket Infrastructure (client-socket.js & server-socket.js)
-  - Disclaimer: Socket isn't being taught until the second week.
-- User Model (auth.js & user.js)
+Moodbook is a powerful, highly customizable and secure personal journal that doubles up as a mood/event tracker.
 
 ## What you need to change
 
