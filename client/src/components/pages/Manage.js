@@ -25,13 +25,16 @@ class Manage extends Component {
       user: null,
       moods: [],
       journals: [],
+      nameText: "",
+      savingText: "",
       createRodal: false,
       editRodal: false,
       name: "",
-      category: "",
       searchText: "",
       selectedMood: null,
       selectedEmoji: null,
+      deleteAccountRodal: false,
+      deleteJournalsRodal: false,
     };
   }
 
@@ -40,6 +43,7 @@ class Manage extends Component {
       this.setState({
         user: user,
         userName: user.name,
+        nameText: user.name,
         moods: user.moods,
       });
     });
@@ -70,6 +74,30 @@ class Manage extends Component {
     });
   }
 
+  openDeleteJournalsRodal = () => {
+    this.setState({
+      deleteJournalsRodal: true,
+    });
+  }
+
+  openDeleteAccountRodal = () => {
+    this.setState({
+      deleteAccountRodal: true,
+    });
+  }
+
+  closeDeleteJournalsRodal = () => {
+    this.setState({
+      deleteJournalsRodal: false,
+    });
+  }
+
+  closeDeleteAccountRodal = () => {
+    this.setState({
+      deleteAccountRodal: false,
+    });
+  }
+
   closeCreateRodal = () => {
     this.setState({
       createRodal: false,
@@ -96,11 +124,28 @@ class Manage extends Component {
     nameField.value = nameField.defaultValue;
   }
 
+  handleDeleteJournals = () => {
+    const body = {
+      owner: this.props.userId,
+    };
+    post("/api/journal/delete", body);
+    this.closeDeleteJournalsRodal();
+  }
+
+  handleDeleteAccount = () => {
+    this.handleDeleteJournals();
+    const body = {
+      _id: this.props.userId,
+    };
+    post("/api/users/delete", body);
+    this.closeDeleteAccountRodal();
+    this.props.handleLogout();
+  }
+
   handleCreateSubmit = () => {
     const newMood = {
       name: this.state.name,
       emoji: this.state.selectedEmoji,
-      category: this.state.category,
     };
     this.setState({
       createRodal: false,
@@ -122,7 +167,6 @@ class Manage extends Component {
     const newMood = {
       name: this.state.name,
       emoji: this.state.selectedEmoji,
-      category: this.state.category,
     };
     newMoods[newMoods.map(mood => mood.name).indexOf(this.state.selectedMood.name)] = newMood;
     this.setState({
@@ -136,7 +180,6 @@ class Manage extends Component {
       prevName: this.state.selectedMood.name,
       name: this.state.name,
       emoji: this.state.selectedEmoji,
-      category: this.state.category,
     };
     //alert(JSON.stringify(body));
     const nameField = document.getElementById("editFormName");
@@ -163,6 +206,22 @@ class Manage extends Component {
     post("/api/users", {_id: this.props.userId, moods: newMoods});
   }
 
+  handleSaveSettings = () => {
+    this.setState({
+      userName: this.state.nameText,
+      savingText: "saving..."
+    });
+    const body = {
+      _id: this.props.userId,
+      name: this.state.nameText,
+    };
+    post("/api/users", body).then(
+      this.setState({
+        savingText: "saved!"
+      }),
+    );
+  }
+
   onEmojiClick = (event, emojiObject) => {
     this.setState({
       selectedEmoji: emojiObject.emoji,
@@ -175,9 +234,9 @@ class Manage extends Component {
     );
   }
 
-  handleOnCategoryChange = (event) => {
+  handleNameTextChange = (event) => {
     this.setState(
-      {category: event.target.value},
+      {nameText: event.target.value},
     );
   }
 
@@ -186,7 +245,6 @@ class Manage extends Component {
       editRodal: true,
       selectedMood: mood,
       name: mood.name,
-      category: mood.category,
       selectedEmoji: mood.emoji,
     });
   }
@@ -217,8 +275,39 @@ class Manage extends Component {
         <>
           <div className="u-flex">
             <div className="Manage-subContainer">
-              <div className="u-title">Account Settings</div>
-              <button className="u-blackFlatButton" onClick={this.downloadTxtFile}>Export data</button>
+              <div className="u-title">Manage Account</div>
+              <div className="u-smallTitle">Account Settings</div>
+              <div>
+                <span>Name: </span>
+                <input className="u-formText" value={this.state.nameText} onChange={this.handleNameTextChange} type="text"/>
+              </div>
+              <div className="u-margin-bottom">
+                <button className="u-blackFlatButton" onClick={this.handleSaveSettings}>Save settings</button>
+                <span className="u-italic"> {this.state.savingText}</span>
+              </div>
+              <div className="u-smallTitle">Export Data</div>
+              <div className="u-margin-bottom">Use the below control to export your journals, moods (including custom moods) and user settings in JSON format.</div>
+              <div className="u-margin-bottom">
+                <button className="u-blackFlatButton" onClick={this.downloadTxtFile}>Export account data</button>
+              </div>
+              <div className="u-smallTitle u-redText">⚠️ Danger Zone</div>
+              <div className="u-margin-bottom">Use the following controls to delete your account data. These cannot be reversed, so be careful!</div>
+              <div className="u-margin-bottom">
+                <button className="u-redFlatButton" onClick={this.openDeleteJournalsRodal}>Delete all journals</button>
+              </div>
+              <div className="u-margin-bottom">
+                <button className="u-redFlatButton" onClick={this.openDeleteAccountRodal}>Delete account</button>
+              </div>
+              <Rodal height={115} visible={this.state.deleteJournalsRodal} onClose={this.closeDeleteJournalsRodal}>
+                <div className="u-rodalTitle">Delete all journals</div>
+                <div>Are you sure you want to delete all journals? This action cannot be undone.</div>
+                <input type="button" className="u-redFlatButton u-margin-top u-margin-bottom" onClick={this.handleDeleteJournals} value="Delete all journals" />
+              </Rodal>
+              <Rodal height={135} visible={this.state.deleteAccountRodal} onClose={this.closeDeleteAccountRodal}>
+                <div className="u-rodalTitle">Delete your account</div>
+                <div>Are you sure you want to delete your user account? This action cannot be undone. You will be logged out of your account.</div>
+                <input type="button"  className="u-redFlatButton u-margin-top u-margin-bottom" onClick={this.handleDeleteAccount} value="Delete account" />
+              </Rodal>
             </div>
             <div className="Manage-subContainer">
               <div className="u-title">Manage moods</div>

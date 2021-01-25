@@ -63,7 +63,6 @@ router.post("/moods/delete", (req, res) => {
 router.post("/moods/edit", (req, res) => {
   Journal.updateMany({owner: req.body._id},
   { $set: { 
-    "moods.$[elem].category" : req.body.category,  
     "moods.$[elem].emoji" : req.body.emoji,
     "moods.$[elem].name" : req.body.name,
   } },

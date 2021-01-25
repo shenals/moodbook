@@ -6,9 +6,7 @@ const UserSchema = new mongoose.Schema({
   moods: [{
     name: String,
     emoji: String,
-    category: String,
   }],
-  categories: [],
 });
 
 // compile model from schema

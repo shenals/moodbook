@@ -234,6 +234,10 @@ tr:nth-child(even) {
   margin-bottom: 0.5rem;
 }
 
+.u-redText {
+  color: red;
+}
+
 .u-smallTitle {
   font-size: 1.1em;
   font-weight: 600;

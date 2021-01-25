@@ -9,7 +9,6 @@ const JournalSchema = new mongoose.Schema({
   moods: [{
     name: String,
     emoji: String,
-    category: String,
   }]
 });
 

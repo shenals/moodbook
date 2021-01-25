@@ -125,11 +125,11 @@ class Search extends Component {
           }}/>
         </div>
         <div className="u-italic u-margin-top u-margin-bottom">
-          {filteredJournals.length} journals {filteredJournals.length === 1 ? "entry" : "entries"} found.
+          {filteredJournals.length} journal {filteredJournals.length === 1 ? "entry" : "entries"} found.
           {this.state.selectedPage * this.state.journalsPerPage + 1 === Math.min(filteredJournals.length, (this.state.selectedPage + 1) * this.state.journalsPerPage) ? 
-          (<span> Showing entry {this.state.selectedPage * this.state.journalsPerPage + 1}.</span>)
+          filteredJournals.length !== 0 && (<span> Showing entry {this.state.selectedPage * this.state.journalsPerPage + 1}.</span>)
            : 
-          (<span> Showing entries {this.state.selectedPage * this.state.journalsPerPage + 1} - {Math.min(filteredJournals.length, (this.state.selectedPage + 1) * this.state.journalsPerPage)}.</span>)
+          filteredJournals.length !== 0 && (<span> Showing entries {this.state.selectedPage * this.state.journalsPerPage + 1} - {Math.min(filteredJournals.length, (this.state.selectedPage + 1) * this.state.journalsPerPage)}.</span>)
           }
         </div>
         <div>

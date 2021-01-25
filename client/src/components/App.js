@@ -116,7 +116,7 @@ class App extends Component {
           <Router>
             <Dashboard path="/" userName={this.state.userName} userId={this.state.userId} date={this.state.date} setDate={this.setDate}/>    
             <Overview path="/overview" userId={this.state.userId} setDate={this.setDate}/>
-            <Manage path="/manage" userId={this.state.userId} />
+            <Manage path="/manage" userId={this.state.userId} handleLogout={this.handleLogout}/>
             <NotFound default />
           </Router>
         ) : (

@@ -33,7 +33,9 @@ class Card extends Component {
         </div>
         <div className="Card-emoji">
           {(this.props.journal.moods.length == 0) && (<div className="Card-emoji-null">"😄"</div>)}
-          {this.props.journal.moods.map((mood) => mood.emoji)}
+          {this.props.journal.moods.slice(0, 3).map((mood) => mood.emoji)}
+          {this.props.journal.moods.length === 4 && `${this.props.journal.moods[3].emoji}`}
+          {this.props.journal.moods.length > 4 && `+${this.props.journal.moods.length - 3}`}
         </div>
       </button>
     );

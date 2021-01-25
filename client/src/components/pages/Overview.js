@@ -66,7 +66,7 @@ class Overview extends Component {
     return (
       <>
       <TopBar title="Your Moodbook Overview" />
-      {this.state.journals.length !== 0 ? (
+      {this.state.userName ? (
         <>
           <div className="u-flex">
           <div className="Overview-subContainer Overview-explore">
