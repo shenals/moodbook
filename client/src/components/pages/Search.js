@@ -49,7 +49,7 @@ class Search extends Component {
   }
 
   handleCountChange = (event) => {
-    this.setState({journalsPerPage: event.target.value});
+    this.setState({journalsPerPage: event.target.value, selectedPage: 0});
   }
 
   handlePageClick = (data) => {
