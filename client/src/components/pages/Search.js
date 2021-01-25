@@ -14,6 +14,7 @@ class Search extends Component {
       selected: [],
       monthFilter: false,
       activeStartDate: curTime,
+      dateView: "year",
       date: {
         dateObj: curTime,
         day: curTime.getDate(),
@@ -39,6 +40,10 @@ class Search extends Component {
     });
   }
 
+  handleDateViewChange = (event) => {
+    this.setState({dateView: event.target.value});
+  }
+
   render() {
     const options = this.props.moods.map((mood) => {
       return {value: mood.name, label: mood.emoji + " " + mood.name};
@@ -49,9 +54,14 @@ class Search extends Component {
         return journal.moods.filter((mood) => mood.name === this.state.selected[i]).length !== 0
       });
     };
-    if(this.state.monthFilter){
+    if(this.state.monthFilter && this.state.dateView === "year"){
       filteredJournals = filteredJournals.filter((journal) => {
         return journal.month === this.state.date.month && journal.year == this.state.date.year;
+      });
+    }
+    if(this.state.monthFilter && this.state.dateView === "decade"){
+      filteredJournals = filteredJournals.filter((journal) => {
+        return journal.year == this.state.date.year;
       });
     }
     filteredJournals.sort((a, b) => a.year * 10000 + a.month * 100 + a.day - (b.year * 10000 + b.month * 100 + b.day));
@@ -69,7 +79,14 @@ class Search extends Component {
             checked={this.state.monthFilter}
             onChange={this.handleFilterChange} />
         </span>
-        <span>Filter by month </span>
+        <span>Filter by 
+          <span>
+            <select value={this.state.value} onChange={this.handleDateViewChange}>
+              <option value="year">month</option>
+              <option value="decade">year</option>
+            </select>
+          </span> 
+        </span>
         <DatePicker
           activeStartDate={this.state.activeStartDate}
           onActiveStartDateChange={({ activeStartDate, value, view }) => {
@@ -78,7 +95,7 @@ class Search extends Component {
             })
           }}
           value={this.state.date.dateObj}
-          maxDetail="year"
+          maxDetail={this.state.dateView}
           clearIcon={null}
           onChange={(value) => {
             this.setState({
@@ -92,7 +109,7 @@ class Search extends Component {
             })
           }}/>
         </div>
-        <div className="u-italic u-margin-top">{filteredJournalsDiv.length} journal entries found.</div>
+        <div className="u-italic u-margin-top">{filteredJournalsDiv.length} journal {filteredJournalsDiv.length === 1 ? "entry" : "entries"} found.</div>
         <div>{filteredJournalsDiv}</div> 
       </>
     );

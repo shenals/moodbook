@@ -26,3 +26,14 @@
     display: block;
     text-align: right;
 }
+
+.Journal-hr {
+    width: 420px;
+    margin-left: 0px;
+}
+
+@media screen and (max-width: 1000px){
+    .Journal-hr {
+      width: calc(100vw - 3 * var(--l));
+    }
+  }

@@ -48,14 +48,15 @@ class Overview extends Component {
   }
 
   render() {
-    const moodCount = this.state.moods.map((mood) => {
+    let moodCount = this.state.moods.map((mood) => {
         return {mood: mood,
           count: this.state.journals.filter((journal) => {
           return journal.moods.filter((jmood) => jmood.name === mood.name).length !== 0
         }).length};
       }
     );
-    moodCount.sort( this.compareMoods ).slice(0, 10);
+    moodCount.sort( this.compareMoods );
+    moodCount = moodCount.slice(0, 10);
     const moodDiv = moodCount.map((mood) => (
       <tr key={mood.mood.name}>
         <td>{mood.mood.emoji} {mood.mood.name}</td>
@@ -68,7 +69,7 @@ class Overview extends Component {
       {this.state.journals.length !== 0 ? (
         <>
           <div className="u-flex">
-            <div className="Overview-subContainer">
+            <div className="Overview-subContainer Overview-quickstats">
               <div className="u-title">Quick stats</div>
               <div className="u-flexRow">
               <div className="Overview-stats">
@@ -101,7 +102,7 @@ class Overview extends Component {
               </div>
               </div>
             </div>
-            <div className="Overview-subContainer">
+            <div className="Overview-subContainer Overview-explore">
               <div className="u-title">Explore your journals</div>
               <Search moods={this.state.moods} journals={this.state.journals} setDate={this.props.setDate}/>
             </div>

@@ -43,6 +43,10 @@ router.post("/initsocket", (req, res) => {
 // | write your API methods below!|
 // |------------------------------|
 
+router.post("/journal/delete", (req, res) => {
+  Journal.deleteMany(req.body).then((journal) => res.send(journal));
+});
+
 router.get("/journal", (req, res) => {
   // empty selector means get all documents
   Journal.find(req.query).then((journal) => res.send(journal));
@@ -66,6 +70,10 @@ router.post("/moods/edit", (req, res) => {
   {
     arrayFilters: [ { "elem.name": req.body.prevName } ]
   }).then((journal) => res.send(journal));
+});
+
+router.post("/users/delete", (req, res) => {
+  User.deleteOne(req.body).then((user) => res.send(user));
 });
 
 router.get("/users", (req, res) => {

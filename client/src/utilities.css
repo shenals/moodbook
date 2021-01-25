@@ -57,7 +57,7 @@ textarea
     background-color: transparent;
     border: none;
     resize: none;
-    width: calc(100vw - 450px);
+    width: calc(100vw - 500px);
 }
 
 form {
@@ -92,9 +92,14 @@ tr:nth-child(even) {
   color: rgb(199, 42, 42);
 }
 
-.u-redFlatButton:hover {
+.u-redFlatButton:hover:enabled {
   background-color: rgb(199, 42, 42);
   color: white;
+}
+
+.u-redFlatButton:disabled {
+  border-color: rgb(219, 107, 107);
+  color: rgb(219, 107, 107);
 }
 
 .u-blackFlatButton {
@@ -125,12 +130,21 @@ tr:nth-child(even) {
   flex-direction: row;
 }
 
-@media screen and (max-width: 800px){
+.u-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 1000px){
   .u-flex {
     flex-direction: column;
   }
   textarea {
     width: calc(100vw - 3 * var(--l));
+  }
+  .u-mobile {
+    display: block;
+    width: calc(100vw - 3 * var(--l));
+    margin-left: 0px;
   }
 }
 
@@ -177,6 +191,10 @@ tr:nth-child(even) {
 
 .u-margin-top {
   margin-top: 0.5em;
+}
+
+.u-margin-bottom {
+  margin-bottom: 0.5em;
 }
 
 .u-hidden {
@@ -261,4 +279,11 @@ tr:nth-child(even) {
   height: 1.5em;
   margin-left: 0.5em;
   margin-bottom: 0.5em;
+}
+
+select {
+  font-family: 'Cabin', sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  margin: 0 0.5em;
 }

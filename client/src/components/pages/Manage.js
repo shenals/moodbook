@@ -267,10 +267,11 @@ class Manage extends Component {
             <Picker preload onEmojiClick={this.onEmojiClick} />
           </label>
           <br/>
-          <input type="button" className="u-blackFlatButton u-margin-right" onClick={this.handleEditSubmit} value="Save mood" />
+          <input type="button" disabled={!this.state.name} className="u-blackFlatButton u-margin-right" onClick={this.handleEditSubmit} value="Save mood" />
           <input type="button" className="u-redFlatButton" onClick={this.handleDeleteSubmit} value="Delete mood" />
           {this.state.moods.some((mood) => mood && mood.name === this.state.name && mood.name !== this.state.selectedMood.name) &&
           <div className="u-red">A mood with the name "{this.state.name}" already exists.</div>}
+          {!this.state.name && <div className="u-red">The name field cannot be empty.</div>}
         </form>
       </Rodal>
       </>

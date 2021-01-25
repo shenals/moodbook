@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DatePicker from 'react-date-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import Rodal from 'rodal';
 
 import "../../utilities.css";
 import "./Journal.css";
@@ -20,6 +21,8 @@ class Journal extends Component {
       disableTextArea: false,
       activeStartDate: curTime,
       searchText: "",
+      emptyJournal: true,
+      deleteRodal: false,
       date: {
         dateObj: curTime,
         day: curTime.getDate(),
@@ -27,6 +30,18 @@ class Journal extends Component {
         year: curTime.getFullYear(),
       },
     };
+  }
+
+  openDeleteRodal = () => {
+    this.setState({
+      deleteRodal: true,
+    });
+  }
+
+  closeDeleteRodal = () => {
+    this.setState({
+      deleteRodal: false,
+    });
   }
 
   handleClickCurMood = (mood) => {
@@ -39,7 +54,21 @@ class Journal extends Component {
     };
     post("/api/journal", body);
     this.setState(
-      {moods: this.state.moods.filter((value) => value.name !== mood.name)},
+      {moods: this.state.moods.filter((value) => value.name !== mood.name), emptyJournal: false},
+    );
+  }
+
+  handleResetMoods = () => {
+    const body = {
+      owner: this.props.userId,
+      day: this.state.date.day,
+      month: this.state.date.month,
+      year: this.state.date.year,
+      moods: [],
+    };
+    post("/api/journal", body);
+    this.setState(
+      {moods: []}
     );
   }
 
@@ -69,7 +98,7 @@ class Journal extends Component {
     const height = textarea.scrollHeight;
     textarea.style.height = `${height + initialHeight}px`;
     this.setState(
-      {text: event.target.value},
+      {text: event.target.value, emptyJournal: false},
     );
     const body = {
       owner: this.props.userId,
@@ -80,6 +109,25 @@ class Journal extends Component {
       moods: this.state.moods,
     };
     post("/api/journal", body);
+  }
+
+  handleDeleteJournal = (event) => {
+    const textarea = document.querySelector('textarea');
+    const initialHeight = 40;
+    textarea.style.height = `${initialHeight}px`;
+    const height = textarea.scrollHeight;
+    textarea.style.height = `${height + initialHeight}px`;
+    this.setState(
+      {text: "", moods: [], emptyJournal: true},
+    );
+    const body = {
+      owner: this.props.userId,
+      day: this.state.date.day,
+      month: this.state.date.month,
+      year: this.state.date.year,
+    };
+    post("/api/journal/delete", body);
+    this.closeDeleteRodal();
   }
 
   handleOnSearchChange = (event) => {
@@ -130,12 +178,14 @@ class Journal extends Component {
         this.setState({
           text: "",
           moods: [], 
+          emptyJournal: true,
         });
       }
       else{
         this.setState({
           text: journal[0].text,
-          moods: journal[0].moods, 
+          moods: journal[0].moods,
+          emptyJournal: false, 
         });
       }
     });
@@ -163,13 +213,15 @@ class Journal extends Component {
         if(journal.length == 0){
           this.setState({
             text: "",
-            moods: [], 
+            moods: [],
+            emptyJournal: true,
           });
         }
         else{
           this.setState({
             text: journal[0].text == null ? "" : journal[0].text,
-            moods: journal[0].moods, 
+            moods: journal[0].moods,
+            emptyJournal: false,
           });
         }
         this.setState({
@@ -231,14 +283,23 @@ class Journal extends Component {
           }}/>
           </div>
           <textarea disabled={this.state.disableTextArea} onChange={this.handleOnTextChange} value={this.state.text}/>
+          <Rodal height={150} visible={this.state.deleteRodal} onClose={this.closeDeleteRodal}>
+            <div className="u-rodalTitle">Delete journal</div>
+            <div>Are you sure you want to delete this journal entry? This action cannot be undone.</div>
+            <input type="button" disabled={this.state.emptyJournal} className="u-redFlatButton u-margin-top u-margin-bottom" onClick={this.handleDeleteJournal} value="Delete journal" />
+          </Rodal>
+          <div className="u-smallTitle u-margin-bottom">Quick Actions</div>
+          <input type="button" disabled={this.state.moods.length === 0} className="u-blackFlatButton u-margin-bottom u-margin-right" onClick={this.handleResetMoods} value="Reset moods" />
+          <input type="button" disabled={this.state.emptyJournal} className="u-redFlatButton u-margin-bottom" onClick={this.openDeleteRodal} value="Delete journal" />
         </div>
         <div className="Journal-subContainer">
           <div>
+            <hr className="u-mobile"/>
             <div className="u-smallTitle">Moods</div>
             <div>{moodList}</div>
             {this.state.moods.length === 0 && (<div>No moods added. Add some moods from below! 😁</div>)}
-            <hr/>
-            <div className="u-smallTitle">Add moods</div>
+            <hr className="Journal-hr"/>
+            <div className="u-smallTitle">All moods</div>
             <FontAwesomeIcon icon={faSearch} />
             <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
             <div>{allMoodList}</div>
