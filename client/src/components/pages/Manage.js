@@ -189,6 +189,8 @@ class Manage extends Component {
       editRodal: false,
       moods: newMoods,
       name: "",
+      mood1: null,
+      mood2: null,
       selectedEmoji: null,
     });
     const body = {
