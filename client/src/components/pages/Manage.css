@@ -10,3 +10,8 @@
         margin-right: var(--l);
     }
   }
+
+.Manage-mergeSelect {
+    display: inline-block;
+    width: 10em;
+}

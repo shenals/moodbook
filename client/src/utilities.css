@@ -205,6 +205,10 @@ tr:nth-child(even) {
   margin-right: 0.5em;
 }
 
+.u-margin-left {
+  margin-left: 0.5em;
+}
+
 .u-link {
   color: var(--primary);
   text-decoration: none;

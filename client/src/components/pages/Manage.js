@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import Select from 'react-select'
 import TopBar from "../TopBar.js";
 import Rodal from 'rodal';
 import Picker from 'emoji-picker-react';
@@ -35,6 +36,8 @@ class Manage extends Component {
       selectedEmoji: null,
       deleteAccountRodal: false,
       deleteJournalsRodal: false,
+      mergeMood1: null,
+      mergeMood2: null,
     };
   }
 
@@ -206,6 +209,29 @@ class Manage extends Component {
     post("/api/users", {_id: this.props.userId, moods: newMoods});
   }
 
+  handleMergeSubmit = () => {
+    const newMoods = this.state.moods.filter((mood) => mood.name !== this.state.mood1.value.name);
+    const body = {
+      _id: this.props.userId,
+      prevName: this.state.mood1.value.name,
+      name: this.state.mood2.value.name,
+      emoji: this.state.mood2.value.emoji,
+    };
+    const body2 = {
+      _id: this.props.userId,
+      moodName: this.state.mood1.name,
+    };
+    this.setState({
+      editRodal: false,
+      moods: newMoods,
+      mood1: null,
+      mood2: null,
+    });
+    post("/api/moods/edit", body);
+    post("/api/moods/delete", body2);
+    post("/api/users", {_id: this.props.userId, moods: newMoods});
+  }
+
   handleSaveSettings = () => {
     this.setState({
       userName: this.state.nameText,
@@ -255,6 +281,18 @@ class Manage extends Component {
     );
   }
 
+  handleMood1Change = (selectedOption) => {
+    this.setState({ 
+      mood1: selectedOption,
+    });
+  }
+
+  handleMood2Change = (selectedOption) => {
+    this.setState({ 
+      mood2: selectedOption,
+    });
+  }
+
   downloadTxtFile = () => {
     const element = document.createElement("a");
     const file = new Blob([JSON.stringify({user: this.state.user, journals: this.state.journals})]);
@@ -265,6 +303,9 @@ class Manage extends Component {
   }
 
   render() {
+    const options = this.state.moods.map((mood) => {
+      return {value: mood, label: mood.emoji + " " + mood.name};
+    });
     const moodList = this.state.moods.filter((mood) => mood.name.includes(this.state.searchText)).map((mood) => (
       <button key={mood.name} className="Overview-moodButton" onClick={() => this.handleClickMood(mood)}> {mood.emoji} {mood.name} </button>
     ));
@@ -276,10 +317,26 @@ class Manage extends Component {
           <div className="u-flex">
           <div className="Manage-subContainer">
               <div className="u-title">Manage moods</div>
+              <div className="u-smallTitle">Create mood</div>
+              <button className="u-blackFlatButton u-margin-bottom" onClick={this.openCreateRodal}>Create new mood</button>
+              <div className="u-smallTitle">Edit moods</div>
               <FontAwesomeIcon icon={faSearch} />
               <input className="u-searchBar" type="text" placeholder="Search moods" value={this.state.searchText} onChange={this.handleOnSearchChange} />
               <div>{moodList}</div>
-              <button className="Overview-moodButton" onClick={this.openCreateRodal}>+ new mood</button>
+              <div className="u-smallTitle">Merge moods</div>
+              <div>
+                Merge
+              <div className="Manage-mergeSelect u-margin-left u-margin-right">
+              <Select placeholder="Mood 1" value={this.state.mood1} options={options} isClearable={true} onChange={this.handleMood1Change}/>
+              </div>
+               with
+              <div className="Manage-mergeSelect u-margin-left">
+              <Select placeholder="Mood 2" value={this.state.mood2} options={options.filter((option) => !this.state.mood1 || option.value.name !== this.state.mood1.value.name)} isClearable={true} onChange={this.handleMood2Change}/>
+              </div>
+              <div>
+              <button className="u-blackFlatButton u-margin-top u-margin-bottom" onClick={this.handleMergeSubmit}>Merge moods</button>
+              </div>
+              </div>
             </div>
             <div className="Manage-subContainer">
               <div className="u-title">Manage Account</div>
