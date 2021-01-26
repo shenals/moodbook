@@ -252,6 +252,12 @@ tr:nth-child(even) {
   margin-bottom: 0.5rem;
 }
 
+.u-homeText {
+  font-size: 1.1em;
+  font-weight: 300;
+  margin-top: 0.5rem;
+}
+
 .u-bigText {
   font-size: 20px;
 }

@@ -90,10 +90,9 @@ class App extends Component {
                   <div className="App-bookEmoji App-bookEmoji15">😭</div>
                 </div>
               </div>
-              <div>
-                <br/>
-                Moodbook is a daily personal journal<br/>
-                that doubles up as a mood tracker.
+              <div className="u-homeText">
+                A powerful, highly customizable and secure personal<br/>
+                journal that doubles up as a mood/event tracker.
               </div>
               <br/>             
               <GoogleLogin
