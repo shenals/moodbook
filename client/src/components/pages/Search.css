@@ -1,0 +1,12 @@
+.Search-moodButton {
+    border: 0;
+    border-radius: 10%;
+    box-shadow: none;
+    margin-top: 0.5em;
+    font-family: 'Cabin', sans-serif;
+    font-size: 0.8em;
+}
+
+.Search-moodButton +  .Search-moodButton {
+    margin-left: 0.5em;
+}

@@ -209,6 +209,10 @@ tr:nth-child(even) {
   margin-left: 0.5em;
 }
 
+.u-whitespace {
+  white-space: pre-wrap;
+}
+
 .u-link {
   color: var(--primary);
   text-decoration: none;

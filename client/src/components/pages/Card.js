@@ -23,11 +23,7 @@ class Card extends Component {
       "Dec",
     ];
     return (
-      <button onClick={() => this.props.setDate({
-          day: this.props.journal.day, 
-          month: this.props.journal.month,
-          year: this.props.journal.year,
-        })} className="Card">
+      <button onClick={() => this.props.cardClick(this.props.journal)} className="Card">
         <div>
           {months[this.props.journal.month - 1]} {this.props.journal.day} <br/> {this.props.journal.year}
         </div>

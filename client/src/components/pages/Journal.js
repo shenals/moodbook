@@ -259,8 +259,11 @@ class Journal extends Component {
       <>
         <div className="u-flex u-flex-wrap">
         <div className="Journal-subContainer">
-          <div>{months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}</div>
-          <div>
+          <div className="u-inlineBlock">
+          <div className="u-rodalTitle">
+            {months[this.state.date.month - 1]} {this.state.date.day}, {this.state.date.year}
+          </div>
+          <span> Select journal date: </span> 
           <DatePicker
           activeStartDate={this.state.activeStartDate}
           onActiveStartDateChange={({ activeStartDate, value, view }) => {

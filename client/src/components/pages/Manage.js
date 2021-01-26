@@ -353,7 +353,7 @@ class Manage extends Component {
               <div>
               <button className="u-blackFlatButton u-margin-bottom u-margin-top" disabled={!this.state.mood1 || !this.state.mood2} onClick={this.openMergeRodal}>Merge moods</button>
               </div>
-              <Rodal height={190} width={500} visible={this.state.mergeRodal} onClose={this.closeMergeRodal}>
+              <Rodal customStyles={{ height: 'auto', width: '35em', bottom: 'auto', top: '50%', transform: 'translateY(-50%)' }} visible={this.state.mergeRodal} onClose={this.closeMergeRodal}>
                 <div className="u-rodalTitle">Merge moods</div>
                 {this.state.mood1 && this.state.mood2 &&
                 <div>Are you sure you want to merge
@@ -391,19 +391,19 @@ class Manage extends Component {
                 <button className="u-blackFlatButton" onClick={this.downloadTxtFile}>Export account data</button>
               </div>
               <div className="u-smallTitle u-redText">⚠️ Danger Zone</div>
-              <div className="u-margin-bottom">Use the following controls to delete your account data. These cannot be reversed, so be careful!</div>
+              <div className="u-margin-bottom">Use the following controls to delete your account data. These actions cannot be reversed - be careful!</div>
               <div className="u-margin-bottom">
                 <button className="u-redFlatButton" onClick={this.openDeleteJournalsRodal}>Delete all journals</button>
               </div>
               <div className="u-margin-bottom">
                 <button className="u-redFlatButton" onClick={this.openDeleteAccountRodal}>Delete account</button>
               </div>
-              <Rodal height={115} visible={this.state.deleteJournalsRodal} onClose={this.closeDeleteJournalsRodal}>
+              <Rodal customStyles={{ height: 'auto', bottom: 'auto', top: '50%', transform: 'translateY(-50%)' }} visible={this.state.deleteJournalsRodal} onClose={this.closeDeleteJournalsRodal}>
                 <div className="u-rodalTitle">Delete all journals</div>
                 <div>Are you sure you want to delete all journals? This action cannot be undone.</div>
                 <input type="button" className="u-redFlatButton u-margin-top u-margin-bottom" onClick={this.handleDeleteJournals} value="Delete all journals" />
               </Rodal>
-              <Rodal height={135} visible={this.state.deleteAccountRodal} onClose={this.closeDeleteAccountRodal}>
+              <Rodal customStyles={{ height: 'auto', bottom: 'auto', top: '50%', transform: 'translateY(-50%)' }} visible={this.state.deleteAccountRodal} onClose={this.closeDeleteAccountRodal}>
                 <div className="u-rodalTitle">Delete your account</div>
                 <div>Are you sure you want to delete your user account? This action cannot be undone. You will be logged out of your account.</div>
                 <input type="button"  className="u-redFlatButton u-margin-top u-margin-bottom" onClick={this.handleDeleteAccount} value="Delete account" />
@@ -414,7 +414,7 @@ class Manage extends Component {
       ) : (
         <div>loading...</div>
       )} 
-      <Rodal height={485} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
+      <Rodal customStyles={{ height: 'auto', bottom: 'auto', top: '50%', transform: 'translateY(-50%)' }} visible={this.state.createRodal} onClose={this.closeCreateRodal}>
         <div className="u-rodalTitle">Create new mood</div>
         <form id="createForm">
           <label>
@@ -437,7 +437,7 @@ class Manage extends Component {
           {!this.state.selectedEmoji && this.state.name && <div className="u-red">Please select an emoji for the new mood.</div>}
         </form>
       </Rodal>
-      <Rodal height={485} visible={this.state.editRodal} onClose={this.closeEditRodal}>
+      <Rodal customStyles={{ height: 'auto', bottom: 'auto', top: '50%', transform: 'translateY(-50%)' }} visible={this.state.editRodal} onClose={this.closeEditRodal}>
         <div className="u-rodalTitle">Edit mood</div>
         <form id="editForm">
           <label>

@@ -3,9 +3,11 @@ import Select from 'react-select'
 import Card from "./Card.js";
 import DatePicker from 'react-date-picker';
 import ReactPaginate from 'react-paginate';
+import Rodal from 'rodal';
 
 import "../../utilities.css";
 import "./pagination.css";
+import "./Search.css";
 
 class Search extends Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class Search extends Component {
       dateView: "year",
       selectedPage: 0,
       journalsPerPage: 25,
+      clickedJournal: null,
+      preview: false,
       date: {
         dateObj: curTime,
         day: curTime.getDate(),
@@ -30,6 +34,25 @@ class Search extends Component {
 
   componentDidMount() {
 
+  }
+
+  openPreview = () => {
+    this.setState({
+      preview: true,
+    });
+  }
+
+  closePreview = () => {
+    this.setState({
+      preview: false,
+    });
+  }
+
+  cardClick = (journal) => {
+    this.setState({ 
+      clickedJournal: journal,
+    });
+    this.openPreview();
   }
 
   handleChange = (selectedOption) => {
@@ -59,6 +82,24 @@ class Search extends Component {
   };
 
   render() {
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const moodList = this.state.clickedJournal ? 
+    this.state.clickedJournal.moods.map((mood) => (
+      <button key={mood.name} className="Search-moodButton" onClick={() => {}}> {mood.emoji} {mood.name} </button>
+    )) : null;
     const options = this.props.moods.map((mood) => {
       return {value: mood.name, label: mood.emoji + " " + mood.name};
     });
@@ -81,7 +122,7 @@ class Search extends Component {
     filteredJournals.sort((a, b) => a.year * 10000 + a.month * 100 + a.day - (b.year * 10000 + b.month * 100 + b.day));
     let paginatedJournals = filteredJournals.slice(this.state.selectedPage * this.state.journalsPerPage, (this.state.selectedPage + 1) * this.state.journalsPerPage);
     let filteredJournalsDiv = paginatedJournals.map((journal) => {
-      return <Card setDate={this.props.setDate} journal={journal}/>
+      return <Card cardClick={this.cardClick} journal={journal}/>
     });
     return (
       <>
@@ -157,7 +198,24 @@ class Search extends Component {
           subContainerClassName={'pages pagination'}
           activeClassName={'active'}
         />}
-        <div>{filteredJournalsDiv}</div> 
+        <div>{filteredJournalsDiv}</div>
+        <Rodal customStyles={{ height: 'auto', bottom: 'auto', top: '50%', transform: 'translateY(-50%)' }}
+           visible={this.state.preview} onClose={this.closePreview}>
+          <div className="u-rodalTitle">Journal Preview</div>
+          {this.state.clickedJournal && 
+          (<div className="u-smallTitle">
+            {months[this.state.clickedJournal.month - 1]} {this.state.clickedJournal.day}, {this.state.clickedJournal.year}
+          </div>)
+          }
+          <hr/>
+          <div className="u-whitespace">{this.state.clickedJournal && this.state.clickedJournal.text}</div>
+          <div>{moodList}</div>
+          <input type="button" className="u-blackFlatButton u-margin-top u-margin-bottom" onClick={() => this.props.setDate({
+            day: this.state.clickedJournal.day, 
+            month: this.state.clickedJournal.month,
+            year: this.state.clickedJournal.year,
+          })} value="Open journal entry" />
+        </Rodal> 
       </>
     );
   }
