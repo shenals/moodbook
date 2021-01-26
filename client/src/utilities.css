@@ -134,7 +134,7 @@ tr:nth-child(even) {
   display: none;
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1200px){
   .u-flex {
     flex-direction: column;
   }
