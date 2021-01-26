@@ -14,4 +14,4 @@ Moodbook is built around a system of descriptive tags named "moods" that can be 
 - View all time Moodbook stats
 - Delete your journal data or your user account if needed
 
-Moodbook's personalizable mood system allows you to keep track of important life events, daily moods and pretty much anything you'd like to. Need to view the exactly when you got paid each month last year? Or perhaps the number of dates you went on this year and read excerpts from your journal entry about each? Moodbook's got your back! :)
+Moodbook's personalizable mood system allows you to keep track of important life events, daily moods and pretty much anything you'd like to. Need to view exactly when you got paid each month last year? Or perhaps the number of dates you went on this year and read excerpts from your journal entry about each? Moodbook's got your back! :)
