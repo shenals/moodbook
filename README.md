@@ -1,52 +1,17 @@
-# Project Skeleton
+# Moodbook
 
-## What we provide
+### About Moodbook
 
-- Google Auth (Skeleton.js & auth.js)
-  - Disclaimer: Auth isn't being taught until the second week.
-- Socket Infrastructure (client-socket.js & server-socket.js)
-  - Disclaimer: Socket isn't being taught until the second week.
-- User Model (auth.js & user.js)
+Moodbook is a powerful, highly customizable and secure personal journal that doubles up as a mood/event tracker.
 
-## What you need to change
+### Features
 
-- Change the font in utilities.css
-- Change the Frontend CLIENT_ID for Google Auth (Skeleton.js) (we'll talk about it at the end of week 2)
-- Change the Server CLIENT_ID for Google Auth (auth.js) (we'll talk about it at the end of week 2)
-- Change the Database SRV for Atlas (server.js)
-- Change the Database Name for MongoDB (server.js)
-- Add a favicon to your website at the path client/dist/favicon.ico
-- Update website title in client/dist/index.html
-- Update this README file ;)
-- Update the package.json file with your app name :) (line 2)
+Moodbook is built around a system of descriptive tags named "moods" that can be assigned to journal entries. Each journal entry corresponds to a single date and contains an editable text block. Moodbook allows you to
 
-## Socket stuff
-Note: we'll be getting to this in lecture in week 2, so don't worry if you don't know it yet
+- Create, delete, merge and retroactively edit moods
+- Quickly filter and read previews of journal entries using moods, month and year
+- Export your journal entries in JSON format
+- View all time Moodbook stats
+- Delete your journal data or your user account if needed
 
-- If you're not using realtime updating or don't need server->client communication, you can remove socket entirely! (server-socket.js, client-socket.js, and anything that imports them)
-- If you are using socket, consider what you want to do with the FIXME in server-socket.js
-
-
-## How to integrate into your own project
-
-On GitHub download this repository as a zip file, then extract the files into your own repository.
-Warning: make sure you copy the hidden files too: .babelrc, .gitignore, .npmrc, and .prettierrc
-
-## don't touch
-
-the following files students do not need to edit. feel free to read them if you would like.
-
-```
-client/src/index.js
-client/src/utilities.js
-client/src/client-socket.js
-server/validator.js
-server/server-socket.js
-.babelrc
-.npmrc
-.prettierrc
-package-lock.json
-webpack.config.js
-```
-
-## Good luck on your project :)
+Moodbook's personalizable mood system allows you to keep track of important life events, daily moods and pretty much anything you'd like to. Need to view exactly when you got paid each month last year? Or perhaps the number of dates you went on this year and read excerpts from your journal entry about each? Moodbook's got your back! :)
