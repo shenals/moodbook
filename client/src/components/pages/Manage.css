@@ -6,15 +6,12 @@
 
 .Manage-mergeSelect {
     display: inline-block;
-    width: 10em;
+    width: 12em;
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1200px){
     .Manage-subContainer {
         width: calc(100vw - 2 * var(--l));
         margin-right: var(--l);
-    }
-    .Manage-mergeSelect {
-        width: 8em;
     }
 }

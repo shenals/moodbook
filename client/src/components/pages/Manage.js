@@ -346,7 +346,10 @@ class Manage extends Component {
               <div className="Manage-mergeSelect u-margin-left u-margin-right">
               <Select placeholder="Mood 1" maxMenuHeight={200} value={this.state.mood1} options={options.filter((option) => !this.state.mood2 || option.value.name !== this.state.mood2.value.name)} isClearable={true} onChange={this.handleMood1Change}/>
               </div>
+              <div className="u-mobile u-margin-top" />
                into
+               <span className="u-mobileOnly u-margin-left"></span>
+               <span className="u-mobileOnly u-margin-left"></span>
               <div className="Manage-mergeSelect u-margin-left">
               <Select placeholder="Mood 2" maxMenuHeight={200} value={this.state.mood2} options={options.filter((option) => !this.state.mood1 || option.value.name !== this.state.mood1.value.name)} isClearable={true} onChange={this.handleMood2Change}/>
               </div>

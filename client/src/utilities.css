@@ -134,6 +134,10 @@ tr:nth-child(even) {
   display: none;
 }
 
+.u-mobileOnly {
+  display: none;
+}
+
 @media screen and (max-width: 1200px){
   .u-flex {
     flex-direction: column;
@@ -145,6 +149,9 @@ tr:nth-child(even) {
     display: block;
     width: calc(100vw - 3 * var(--l));
     margin-left: 0px;
+  }
+  .u-mobileOnly {
+    display: inline-block;
   }
 }
 
