@@ -192,11 +192,14 @@ class Journal extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // source: https://codepen.io/DNLHC/pen/qrvPOq
+    // ---------------------------------------------------
     const textarea = document.querySelector('textarea');
     const initialHeight = 40;
     textarea.style.height = `${initialHeight}px`;
     const height = textarea.scrollHeight;
     textarea.style.height = `${height + initialHeight}px`;
+    // ---------------------------------------------------
     if (prevState.date !== this.state.date) {
       this.setState({
         disableTextArea: true,
