@@ -4,14 +4,17 @@
     margin-top: var(--m);
 }
 
+.Manage-mergeSelect {
+    display: inline-block;
+    width: 10em;
+}
+
 @media screen and (max-width: 1000px){
     .Manage-subContainer {
         width: calc(100vw - 2 * var(--l));
         margin-right: var(--l);
     }
-  }
-
-.Manage-mergeSelect {
-    display: inline-block;
-    width: 10em;
+    .Manage-mergeSelect {
+        width: 8em;
+    }
 }
