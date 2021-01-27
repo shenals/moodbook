@@ -356,7 +356,7 @@ class Manage extends Component {
               <div>
               <button className="u-blackFlatButton u-margin-bottom u-margin-top" disabled={!this.state.mood1 || !this.state.mood2} onClick={this.openMergeRodal}>Merge moods</button>
               </div>
-              <Rodal customStyles={{ height: 'auto', width: '30em', bottom: 'auto', top: '50%', transform: 'translateY(-50%)' }} visible={this.state.mergeRodal} onClose={this.closeMergeRodal}>
+              <Rodal customStyles={{ height: 'auto', width: '28em', bottom: 'auto', top: '50%', transform: 'translateY(-50%)', padding: '1em' }} visible={this.state.mergeRodal} onClose={this.closeMergeRodal}>
                 <div className="u-rodalTitle">Merge moods</div>
                 {this.state.mood1 && this.state.mood2 &&
                 <div>Are you sure you want to merge
